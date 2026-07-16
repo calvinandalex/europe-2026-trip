@@ -62,11 +62,7 @@ function stopLatLng(stop) {
 
 function metaText(row) {
   const person = family.find(member => member.id === row.completed_by);
-  const who = person ? person.emoji + ' ' + person.name : 'Family';
-  const when = row.completed_at
-    ? new Date(row.completed_at).toLocaleString([], { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
-    : 'just now';
-  return who + ' · ' + when;
+  return '✓ ' + (person ? person.name : 'Family');
 }
 
 function bookedTextForStop(name, ticket) {
@@ -124,7 +120,16 @@ function paint() {
     const completed = Boolean(row && row.completed);
     element.classList.toggle('completed', completed);
     const meta = document.querySelector('[data-meta="' + element.dataset.id + '"]');
-    if (meta) meta.textContent = completed ? metaText(row) : '';
+    if (meta) {
+      meta.className = 'checked-meta';
+      if (completed) {
+        const person = family.find(member => member.id === row.completed_by);
+        if (person) meta.classList.add('checked-by-' + person.id);
+        meta.textContent = metaText(row);
+      } else {
+        meta.textContent = '';
+      }
+    }
   });
 }
 

@@ -30,12 +30,15 @@ function renderMembers() {
     '<button class="member-btn ' + (store.member === member.id ? 'active' : '') + '" data-member="' + member.id + '">' +
     member.emoji + ' ' + member.name + '</button>'
   ).join('');
+  if (wrap.dataset.bound === 'true') return;
+  wrap.dataset.bound = 'true';
   wrap.addEventListener('click', event => {
     const button = event.target.closest('[data-member]');
     if (!button) return;
     store.member = button.dataset.member;
     localStorage.setItem('europe2026_member', store.member);
     renderMembers();
+    renderPacking();
   });
 }
 
@@ -100,7 +103,7 @@ function packKey(person, item) {
 
 function renderPacking() {
   const root = $('#packingCards');
-  root.innerHTML = packing.map(person =>
+  root.innerHTML = orderedPacking().map(person =>
     '<article class="packing-person ' + person.className + '" data-person="' + person.id + '">' +
     '<div class="person-header"><span class="emoji">' + person.emoji + '</span><div class="person-info">' +
     '<span class="person-name">' + esc(person.name) + '</span><div class="person-bar"><div class="person-fill" data-pack-fill="' + person.id + '"></div></div></div>' +
@@ -113,15 +116,29 @@ function renderPacking() {
       ).join('') + '</div>'
     ).join('') + '</article>'
   ).join('');
-  root.addEventListener('click', event => {
-    const item = event.target.closest('.packing-item');
-    if (!item) return;
-    const key = item.dataset.key;
-    const value = localStorage.getItem(key) !== 'true';
-    localStorage.setItem(key, String(value));
-    paintPacking();
-  });
+  if (root.dataset.bound !== 'true') {
+    root.dataset.bound = 'true';
+    root.addEventListener('click', event => {
+      const item = event.target.closest('.packing-item');
+      if (!item) return;
+      const key = item.dataset.key;
+      const value = localStorage.getItem(key) !== 'true';
+      localStorage.setItem(key, String(value));
+      paintPacking();
+    });
+  }
   paintPacking();
+}
+
+function orderedPacking() {
+  const familyIds = family.map(member => member.id);
+  const selected = packing.find(person => person.id === store.member);
+  const personalLists = packing.filter(person => familyIds.includes(person.id));
+  const sharedLists = packing.filter(person => !familyIds.includes(person.id));
+  const orderedPersonal = selected
+    ? [selected].concat(personalLists.filter(person => person.id !== selected.id))
+    : personalLists;
+  return orderedPersonal.concat(sharedLists);
 }
 
 function paintPacking() {
@@ -152,7 +169,7 @@ function paintCloud() {
     element.classList.toggle('completed', completed);
     if (completed && element.classList.contains('checklist-item')) done += 1;
     const meta = document.querySelector('[data-meta="' + element.dataset.id + '"]');
-    if (meta) meta.textContent = completed ? metaText(row) : '';
+    if (meta) setCheckedMeta(meta, completed ? row : null);
   });
   const fill = $('#progressFill');
   const text = $('#progressText');
@@ -160,16 +177,20 @@ function paintCloud() {
   if (text) text.textContent = done + ' of ' + total;
 }
 
+function setCheckedMeta(meta, row) {
+  meta.className = 'checked-meta';
+  if (!row || !row.completed) {
+    meta.textContent = '';
+    return;
+  }
+  const person = family.find(member => member.id === row.completed_by);
+  if (person) meta.classList.add('checked-by-' + person.id);
+  meta.textContent = metaText(row);
+}
+
 function metaText(row) {
   const person = family.find(member => member.id === row.completed_by);
-  const who = person ? person.emoji + ' ' + person.name : 'Family';
-  const when = row.completed_at ? new Date(row.completed_at).toLocaleString([], {
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: '2-digit'
-  }) : 'just now';
-  return who + ' · ' + when;
+  return '✓ ' + (person ? person.name : 'Family');
 }
 
 function celebrate() {
