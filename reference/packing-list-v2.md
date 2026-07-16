@@ -73,3 +73,5 @@
 - Cooling towels
 - Insect repellent
 - Parasol
+- Christian's birthday gift + card (from Mom & Dad)
+- Small birthday supplies (candles if wanted, party accents) — optional

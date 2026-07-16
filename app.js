@@ -45,10 +45,22 @@ function preBookedBadge(text) {
     : '';
 }
 
+function birthdayBanner(day) {
+  if (!day.birthday) return '';
+  return '<button class="birthday-banner" type="button" data-birthday-confetti aria-label="Celebrate Christian birthday">' +
+    '<span class="birthday-copy">' + esc(day.birthday.banner) + '</span>' +
+    '<span class="birthday-badge">' + esc(day.birthday.age) + '</span>' +
+    '</button>' +
+    '<div class="birthday-countdown" data-birthday-countdown="' + esc(day.birthday.date) + '">' +
+    'Calculating birthday countdown...' +
+    '</div>';
+}
+
 function dayCard(day) {
   return '<article class="day-card day-' + day.cls + '">' +
     '<div class="day-header"><span class="day-icon">' + day.icon + '</span> ' + esc(day.date) +
     '<span class="day-subtitle">' + esc(day.title) + '</span></div>' +
+    birthdayBanner(day) +
     (day.link ? '<a class="tour-open" href="' + day.link[1] + '">' + day.link[0] + '</a>' : '') +
     (day.prep ? '<div class="prep-box"><h4>🎒 Pack for Today</h4><ul>' + day.prep.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>' : '') +
     '<div class="checklist">' + day.items.map((item, index) => {
@@ -68,10 +80,18 @@ function renderDays() {
   const root = $('#dayCards');
   root.innerHTML = days.map(dayCard).join('');
   root.addEventListener('click', event => {
+    if (event.target.closest('[data-birthday-confetti]')) {
+      showBirthdayConfetti();
+      return;
+    }
     const item = event.target.closest('.checklist-item');
     if (item) toggleCloud(item.dataset.id);
   });
   paintCloud();
+  renderBirthdayCountdowns();
+  if (document.querySelector('[data-birthday-confetti]')) {
+    setTimeout(showBirthdayConfetti, 700);
+  }
 }
 
 function packKey(person, item) {
@@ -159,6 +179,19 @@ function celebrate() {
   setTimeout(() => { element.style.display = 'none'; }, 850);
 }
 
+function showBirthdayConfetti() {
+  const banner = document.querySelector('[data-birthday-confetti]');
+  if (!banner) return;
+  const burst = document.createElement('div');
+  burst.className = 'birthday-confetti';
+  burst.setAttribute('aria-hidden', 'true');
+  burst.innerHTML = ['🎉', '✨', '🎂', '⭐', '🎈', '✨'].map((emoji, index) =>
+    '<span style="--i:' + index + '">' + emoji + '</span>'
+  ).join('');
+  banner.appendChild(burst);
+  setTimeout(() => { burst.remove(); }, 1400);
+}
+
 async function toggleCloud(id) {
   const current = Boolean(store.items[id] && store.items[id].completed);
   const next = !current;
@@ -227,6 +260,37 @@ function renderCountdown() {
   element.textContent = daysLeft + ' days · ' + hoursLeft + ' hours until takeoff';
 }
 
+function isAthensBirthdayToday() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Athens',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date()).reduce((value, part) => {
+    value[part.type] = part.value;
+    return value;
+  }, {});
+  return parts.year === '2026' && parts.month === '07' && parts.day === '17';
+}
+
+function renderBirthdayCountdowns() {
+  document.querySelectorAll('[data-birthday-countdown]').forEach(element => {
+    if (isAthensBirthdayToday()) {
+      element.textContent = "🎂 It's Christian's 14th birthday today! 🎉";
+      return;
+    }
+    const birthday = new Date(element.dataset.birthdayCountdown);
+    const diff = birthday - Date.now();
+    if (diff <= 0) {
+      element.textContent = "🎂 It's Christian's 14th birthday today! 🎉";
+      return;
+    }
+    const daysLeft = Math.floor(diff / 86400000);
+    const hoursLeft = Math.floor((diff % 86400000) / 3600000);
+    element.textContent = '🎂 Birthday countdown: ' + daysLeft + ' days · ' + hoursLeft + ' hours';
+  });
+}
+
 async function initSupabase() {
   try {
     client = window.supabase.createClient(supabaseUrl, supabaseAnon);
@@ -252,7 +316,10 @@ async function initSupabase() {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCountdown();
-  setInterval(renderCountdown, 60000);
+  setInterval(() => {
+    renderCountdown();
+    renderBirthdayCountdowns();
+  }, 60000);
   renderMembers();
   renderDays();
   renderPacking();
