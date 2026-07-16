@@ -1,0 +1,417 @@
+Delivered-To: calvinbagley@gmail.com
+Received: by 2002:a05:7412:4e22:b0:1d7:9a57:171c with SMTP id gb34csp1693102rdb;
+        Tue, 19 May 2026 19:54:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:6383:b0:488:c014:34da with SMTP id 5b1f17b1804b1-48fe651690fmr340705495e9.26.1779245647281;
+        Tue, 19 May 2026 19:54:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779245647; cv=none;
+        d=google.com; s=arc-20240605;
+        b=NHs36ysPOibrkvzeBZp5VDqWBZejFpCDkGzEsx5J36D+C/5iT3+7vrjh7zfXpBZKB2
+         XFGwU76WuZtMgRLckrRHDTWPMCU6/do9buGeqyvAEL0qvsvi95RrMOclhT3HqeaMY6a+
+         RXqFznYVc9EXF4MhnxjvOCye2ij4OYUhXNcywzOM0LAHGkuB1zdI1dbelM9DYbB9CNoc
+         wGNIKvkqSGFVBmaX2T65jVUIKhWNyRUYnF1I2GYdRGk0P9fgZ/rvdUrHa+kqy29hs/y8
+         DtlLXm4nDwHOuhdfhc2JzFdS0ySAktaK7lduQm1T+/cDMy/VyFA2D7gh6AaJrIDm7G05
+         BVsQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:to:subject:from:date:reply-to:mime-version
+         :content-transfer-encoding:content-disposition:dkim-signature;
+        bh=oFKdpDcRWrnyVdyhcxq5q63fr/XPxucOYm98ABMqI8w=;
+        fh=uQyYQraKfQm/a1gX6BKXv6s/Cl3sXqdJZNoAlR3rnsc=;
+        b=lMq1g4Sgi2uxuY70QhiBodB7lhE/O8i+0bGi1iCxvkKCMbgycaw5uLLGkdLV2WN89g
+         yDmmaDpobLCIr7PwZXTrHukOLc/C0qs9Gz7qHwuF/j9WlWYp8a3BsDHz0FcjQtViOFFY
+         b9Yx3OY/Koim5W/Qzrlrq8G3PiTvixOTWku6YD5snoygEjkpzWBdoNYtjTQuhgw3zIe9
+         adKGnQtAZ4yU3PrHY9ZPHeWzUW0LTB7IbWIKMamJOVIf2vtg9bPfdGkERjFas8Oc+6XF
+         YjAY5wK+gNSaqrRKfyXU+ILYj+igySQzxrX8B9Th/sZ0iKfmMLJRAdY0wXz84Pamfgqf
+         ksjQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@booking.com header.s=bk header.b="a/MU6h//";
+       spf=pass (google.com: domain of noreply@mailer.booking.com designates 37.10.30.15 as permitted sender) smtp.mailfrom=noreply@mailer.booking.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=booking.com
+Return-Path: <noreply@mailer.booking.com>
+Received: from mailout-204-r2.booking.com (mailout-204-r2.booking.com. [37.10.30.15])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-45da1b70562si34998201f8f.171.2026.05.19.19.54.07
+        for <calvinbagley@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2026 19:54:07 -0700 (PDT)
+Received-SPF: pass (google.com: domain of noreply@mailer.booking.com designates 37.10.30.15 as permitted sender) client-ip=37.10.30.15;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@booking.com header.s=bk header.b="a/MU6h//";
+       spf=pass (google.com: domain of noreply@mailer.booking.com designates 37.10.30.15 as permitted sender) smtp.mailfrom=noreply@mailer.booking.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=booking.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=bk; d=booking.com;
+ h=Content-Transfer-Encoding:Content-Type:MIME-Version:Reply-To:Date:From:
+ Subject:To:Message-Id; i=noreply@booking.com;
+ bh=oFKdpDcRWrnyVdyhcxq5q63fr/XPxucOYm98ABMqI8w=;
+ b=a/MU6h//MfJVFuajzGghRs4Xhp5C7mVGa1uXdnGwrBmXEQdz836MKoLHXi3y78J4aWsUbgZV9SfV
+   opp7Q8tqLlBywz52ae46Wcpy7RjO79QjA37ywdlaJQeSZb14q8W4FGM25LHMA6m4qIz5QLcJraHW
+   K3zKQoe4UPQYLazAmRA=
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Content-Type: text/html; charset="UTF-8"
+MIME-Version: 1.0
+X-Mailer: MIME::Lite 3.031 (F2.85; T2.17; A2.21; B3.16; Q3.16)
+Reply-To: "Hotel Palazzo Priuli through Booking.com" <noreply@booking.com>
+Date: Wed, 20 May 2026 04:54:04 +0200
+From: "Hotel Palazzo Priuli through Booking.com" <noreply@booking.com>
+Subject: You have a message from Hotel Palazzo Priuli
+To: calvinbagley@gmail.com
+X-Bme-Id: 37600223338
+Message-Id: <4gKx2R0KLpz2ylP@mailrouter-108.ams4.prod.booking.com>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="index,follow"/>
+    <meta http-equiv="content-style-type" content="text/css"/>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+    <title>You have a new message from Hotel Palazzo Priuli</title>
+    <style type="text/css">
+        .ExternalClass {
+            width: 100%;
+        }
+
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+            line-height: 100% !important;
+        }
+
+        body {
+            -webkit-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        table td {
+            border-collapse: collapse;
+        }
+
+        u + .body {
+            min-width: 420px;
+            margin: 0;
+            padding: 0;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: black;
+            line-height: 100%;
+        }
+
+        a, a:link {
+            color: #0071C2;
+            text-decoration: underline;
+        }
+
+        body, table, td, a {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        table, td {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        img {
+            border: 0;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        * [lang="container-table"] {
+            max-width: 420px;
+        }
+
+        @media only screen and (max-width: 500px ) {
+            .mobile-grid {
+                margin: 0 auto !important;
+                width: 100% !important;
+                display: block !important;
+            }
+
+            .mobile-1-col {
+                width: 100% !important;
+                display: block !important;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                min-width: 210px !important;
+            }
+        }
+
+        /*body, table, td, a{-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-font-smoothing: antialiased;}
+        table, td{mso-table-lspace: 0pt; mso-table-rspace: 0pt;}
+        img{border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic;}
+        table{border-collapse: collapse !important;}
+        body{font-family:BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; height: 100% !important; margin: 0 !important; padding: 0 !important; width: 100% !important; font-size: 14px; line-height: 20px;}
+        div[style*="margin: 16px 0;"] { margin:0 !important; }
+        a {color: #0071C2;}
+        p {margin: 0;}
+        a[x-apple-data-detectors] {
+        color: inherit !important;
+        text-decoration: none !important;
+        font-size: inherit !important;
+        font-family: inherit !important;
+        font-weight: inherit !important;
+        line-height: inherit !important;
+        }
+        .font-sm {font-size: 12px; line-height: 18px;}
+        .pulsepromo {background-color: #F5F5F5;}
+        .pulsepromo__badge {width: 119px; height: 35px;}
+        @media only screen and (min-width: 480px ) {
+        body[body] .mobilecontent{display: table-cell !important; max-height: none !important;}
+        .booking-details {text-align: right;}
+        .message__legal {padding: 0 0 16px;}
+        }
+        @media only screen and (max-width: 479px ) {
+        body[body] .m-hide{width:0;display:none!important;}
+        body[body] .m-show{display:block!important;}
+        body[body] .deviceWidth{width:95%!important;padding:0!important;}
+        body[body] .m-100p {width:100%!important;padding:0!important;}
+        body[body] .m-50p{width:49%!important;padding:0!important;}
+        .header td {display: block;}
+        .m-100p {width:90%!important;padding:0!important;}
+        .m-centre {float: none !important; text-align: center !important;}
+        .m-left {float: none !important; text-align: left !important; padding-top:20px !important;}
+        .m-right {float: none !important; text-align: right !important;}
+        .m-small {font-size: 16px !important; line-height: 20px !important;}
+        .m-pull-left {float:none !important; text-align: left !important;}
+        }*/
+    </style>
+</head>
+<body class="body" bgcolor="#FFFFFF" topmargin="0" leftmargin="0" marginwidth="0" marginheight="0"
+      style="font-family:BlinkMacSystemFont, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: 400;background-color: #FFFFFF;width: 100%;">
+<!--[if mso]>
+<style type="text/css">
+    body, table, td {
+        font-family: Arial, Helvetica, sans-serif !important;
+    }
+</style>
+<![endif]-->
+<table width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+    <!-- Gmail min-width hack -->
+    <div class="Gmail"
+         style="height: 1px !important; margin-top: -1px !important; max-width: 420 !important; min-width: 420 !important; width: 420 !important;"></div>
+    <tr>
+        <td>
+            <!-- Ghost table -->
+            <!--[if (gte mso 9)|(IE)]>
+            <table width="420" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td>
+            <![endif]-->
+            <table class="container-table" lang="container-table" width="420" cellspacing="0" cellpadding="0" border="0"
+                   align="center"
+                   style="margin-left: auto; margin-right: auto; max-width: 420px; width: 420px; -webkit-font-smoothing: antialiased; -moz-font-smoothing: grayscale;">
+                <tr>
+                    <td>
+                        <!-- Place all content within this <td> -->
+                        <table bgcolor="#00224F" width="420" cellspacing="0" cellpadding="0" border="0"
+                               style="width: 420px; border-bottom: 1px solid #E6E6E6; color: #FFFFFF;">
+                            <tr>
+                                <td bgcolor="#00224F"
+                                    style="padding-left: 20px; padding-top: 10px; padding-bottom: 10px; background-color: #00224F;">
+                                    <img width="130" src="https://r-xx.bstatic.com/static/img/mean/logo_white.png"
+                                         border="0" alt="booking.com"
+                                         style="display: block; margin: 0; padding: 0; width: 130px;"/>
+                                </td>
+                                    <td style="padding-right: 20px; padding-top: 10px; padding-bottom: 10px; background-color: #00224F;">
+                                        <p style="font-size: 14px;line-height: 20px;font-weight: 400;margin: 0; padding: 0; text-align: right; color: #FFFFFF;">
+                                            Confirmation number:
+                                            <a href="https://secure.booking.com/myreservations.html?bn=6231598372"
+                                               style="cursor: pointer;color: #0071C2;display: inline-block;">
+                                                6231598372
+                                            </a>
+                                        </p>
+                                    </td>
+                            </tr>
+                        </table>
+                        <table width="420" align="center" cellspacing="0" cellpadding="0" border="0"
+                               style="width: 420px;">
+                            <tr>
+                                <td style="font-size: 24px;line-height: 32px;font-weight: 600; font-weight: 700; text-align: center; color: #333333; padding-top: 50px; padding-left: 80px; padding-right: 80px; padding-bottom: 50px;">
+                                    You have a new message from Hotel Palazzo Priuli
+                                </td>
+                            </tr>
+                        </table>
+                            <!--start guest name sent: -->
+                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="padding-left: 20px; padding-bottom: 10px; padding-right: 20px; text-align: left;">
+                                        <p style="font-size: 16px;line-height: 24px;font-weight: 500;display: block;margin: 0;padding: 0; font-weight: 600; color: #333333;">
+                                            Property's message:
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        <!--end guest name sent: -->
+                        <table width="420" align="center" cellspacing="0" cellpadding="0" border="0"
+                               style="width: 420px;">
+                            <tr>
+                                <td style="padding-left: 10px;">
+                                    <img src="http://r.bstatic.com/static/img/messaging/speechbubble_arrow.png"
+                                         width="10" alt="" style="display: block; margin: 0; padding: 0; width: 10px;"/>
+                                </td>
+                                <td width="100%" style="padding-right: 20px; padding-bottom: 10px;">
+                                    <table width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
+                                        <tr>
+                                            <td bgcolor="#E6E6E6"
+                                                style="padding: 16px; margin: 0; background-color: #E6E6E6;font-size: 16px;line-height: 24px;font-weight: 400;color: #000000;border-top-left-radius: 8px; border-top-right-radius: 8px;border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;">
+                                                <span>Dear Calvin Bagley,<br>Thank you for choosing the Priuli Collection for your stay in Venice.<br>We are delighted to confirm your reservation from Sunday 26 July 2026 to Monday 27 July 2026 and we look forward to welcoming you!<br><br>Your experience can start right away. The Priuli Experience, our online concierge, is at your disposal to offer inspirations and services designed to make your stay truly special. You can book:<br><br>Exclusive experiences<br>Group tours<br>Gondola rides<br>Selected restaurants<br>and request special in-room arrangements!<br><br>You can choose your services directly here:<br>[link removed]<br><br>We look forward to helping you create your perfect stay in Venice.<br><br>Warm regards,<br>Priuli Collection<br></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <table width="100%" align="center" cellspacing="0" cellpadding="0" border="0">
+                            <tbody>
+                            <tr>
+                                <td style="padding: 20px;">
+                                    <table cellspacing="0" cellpadding="0" border="0" style="background-color: #0071C2;border-radius:4px;-webkit-text-size-adjust:none;color:#FFFFFF;border: 2px solid #0071C2;">
+                                        <tbody>
+                                        <tr>
+                                            <td style="color: #FFFFFF;font-size: 14px;font-weight: 700;text-align: center;text-decoration:none;padding: 10px;">
+                                                <a target="_blank" href="https://secure.booking.com/inbox/partner-chat?vertical=accommodation&external_id=6231598372&bn=6231598372&product=post_booking&source=email&channel=partner_chat&opened_from_source=wakeup_email" alt="https://secure.booking.com/inbox/partner-chat?vertical=accommodation&external_id=6231598372&bn=6231598372&product=post_booking&source=email&channel=partner_chat&opened_from_source=wakeup_email" style="color: #FFFFFF;font-size: 14px;font-weight: 700;text-align: center;padding: 10px;text-decoration:none;cursor: pointer;">View messages</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                            <!--start-->
+                            <table width="420" cellspacing="0" cellpadding="0" border="0"
+                                   style="width: 420px; border-top: 1px solid #E6E6E6;">
+                                <!--RESERVATION DETAILS-->
+                                <tr>
+                                    <td>
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="font-size: 14px;line-height: 20px;font-weight: 400; color: #6B6B6B; padding: 20px;">
+                                                    <p style="font-size: 16px;line-height: 24px;font-weight: 500; margin: 0; color: #6B6B6B; font-weight: bold;">
+                                                        Reservation Details
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding-left: 20px; padding-bottom: 20px; padding-right: 20px;">
+                                                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                                        <tr>
+                                                            <td width="50%"
+                                                                style="font-size: 14px;line-height: 20px;font-weight: 400; color: #6B6B6B;">
+                                                                <p style="display: block;margin: 0;padding: 0;">
+                                                                    Check-in:
+                                                                    <br/>
+                                                                    <span style="display: block;margin: 0;padding: 0;font-size: 16px;line-height: 24px;font-weight: 500;">Sun 26 Jul 2026</span>
+                                                                </p>
+                                                            </td>
+                                                            <td width="50%"
+                                                                style="font-size: 14px;line-height: 20px;font-weight: 400; color: #6B6B6B;">
+                                                                <p style="display: block;margin: 0;padding: 0;">
+                                                                    Check-out:
+                                                                    <br/>
+                                                                    <span style="display: block;margin: 0;padding: 0;font-size: 16px;line-height: 24px;font-weight: 500;">Mon 27 Jul 2026</span>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="font-size: 14px;line-height: 20px;font-weight: 400; color: #6B6B6B; padding: 0 20px 20px;">
+                                                    <p style="display: block;margin: 0;padding: 0;">
+                                                        Property Name:
+                                                        <br/>
+                                                        <span style="display: block;margin: 0;padding: 0;font-size: 16px;line-height: 24px;font-weight: 500;">
+                                                            <a href="https://www.booking.com/hotel/it/priuli.html"
+                                                               style="font-size: 16px;line-height: 24px;font-weight: 500;cursor: pointer;color: #0071C2; text-decoration: none;">
+                                                            Hotel Palazzo Priuli</a>
+                                                        </span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="font-size: 14px;line-height: 20px;font-weight: 400;color: #6B6B6B; padding: 0 20px 20px;">
+                                                    <p style="display: block;margin: 0;padding: 0;">
+                                                        Booking Number:
+                                                        <br/>
+                                                        <span style="display: block;margin: 0;padding: 0;font-size: 16px;line-height: 24px;font-weight: 500;">
+                                                            <a href="https://secure.booking.com/myreservations.html?bn=6231598372"
+                                                               style="font-size: 16px;line-height: 24px;font-weight: 500;cursor: pointer;color: #0071C2; text-decoration: none;">
+                                                            6231598372</a>
+                                                        </span>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--end-->
+                        <table width="100%" cellspacing="0" cellpadding="0" border="0"
+                               style="width: 420px; color: #000000; border-top: 1px solid #E6E6E6;">
+                            <tr>
+                                <td align="center" style="padding: 20px;">
+                                    <p style="display: block;margin: 0;padding: 0; font-size: 12px;">
+                                        &copy; Copyright <a style="color:#0071C2;" href="https://www.booking.com?source=p2g_email">Booking.com</a> 2026<br>This email was sent by <a style="color:#0071C2;" href="https://www.booking.com?source=p2g_email">Booking.com</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 30px; text-align: center; font-size: 12px;">
+                                    <p style="display: block;margin: 0;padding: 0;">Booking.com will receive and process replies to this email as set forth in the <a style="cursor: pointer;color: #0071C2;" href="https://www.booking.com/content/privacy.html?label=gen000nr-10EiBteWJvb2tpbmdtZ19yZXF1ZXN0X2NvbmZpcm1hdGlvbiiCAkICWFhIMVgEcgJ4eIgBAZgBM7gBBcgBBdgBA-gBAfgBAZICAXmoAgE">Booking.com Privacy Statement</a>. The content of the message from Hotel Palazzo Priuli was not generated by Booking.com, meaning Booking.com cannot be held accountable for the content of the message.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <a style="cursor: pointer;color: #0071C2;"
+                                       href="https://secure.booking.com/faq.html?faq_item=item_communication">
+                                        Why did I receive this message?
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- Place all content before this <td> -->
+                    </td>
+                </tr>
+            </table>
+            <!--[if (gte mso 9)|(IE)]>
+            </td>
+            </tr>
+            </table>
+            <![endif]-->
+        </td>
+    </tr>
+</table>
+<!-- prevent Gmail on iOS font size manipulation -->
+<div style="display:none; white-space:nowrap; font:15px courier; line-height:0;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+</div>
+</body>
+</html>

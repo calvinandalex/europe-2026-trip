@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+ <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+ <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+
+ <meta name="viewport" content="width=device-width,
+ initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+ <style>
+ #map_d8cae877160b1ed4596f1c7ef54cd798 {
+ position: relative;
+ width: 100.0%;
+ height: 100.0%;
+ left: 0.0%;
+ top: 0.0%;
+ }
+ .leaflet-container { font-size: 1rem; }
+ </style>
+
+ <style>html, body {
+ width: 100%;
+ height: 100%;
+ margin: 0;
+ padding: 0;
+ }
+ </style>
+
+ <style>#map {
+ position:absolute;
+ top:0;
+ bottom:0;
+ right:0;
+ left:0;
+ }
+ </style>
+
+ <script>
+ L_NO_TOUCH = false;
+ L_DISABLE_3D = false;
+ </script>
+
+
+</head>
+<body>
+
+
+<div style="position: fixed; bottom: 25px; left: 25px; width: 345px; z-index: 9999;
+background: white; border: 2px solid #555; padding: 10px; font-size: 13px;">
+<b>Athens optimized route</b><br>
+Blue numbers = suggested sequence to reduce backtracking.<br>
+Green shaded areas = good family hotel zones.<br>
+Mount Lycabettus and the Stadium are least walk-efficient; use taxi/driver there.
+</div>
+
+ <div class="folium-map" id="map_d8cae877160b1ed4596f1c7ef54cd798" ></div>
+
+</body>
+<script>
+
+
+ var map_d8cae877160b1ed4596f1c7ef54cd798 = L.map(
+ "map_d8cae877160b1ed4596f1c7ef54cd798",
+ {
+ center: [37.974, 23.731],
+ crs: L.CRS.EPSG3857,
+ ...{
+ "zoom": 15,
+ "zoomControl": true,
+ "preferCanvas": false,
+}
+
+ }
+ );
+
+
+
+
+
+ var tile_layer_63000f27a46dd241f2826bc4bcc92554 = L.tileLayer(
+ "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+ {
+ "minZoom": 0,
+ "maxZoom": 19,
+ "maxNativeZoom": 19,
+ "noWrap": false,
+ "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+ "subdomains": "abc",
+ "detectRetina": false,
+ "tms": false,
+ "opacity": 1,
+}
+ );
+
+
+ tile_layer_63000f27a46dd241f2826bc4bcc92554.addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+
+
+ var marker_958edd9bc655b7505766dd114c955d99 = L.marker(
+ [37.9683, 23.7282],
+ {}
+ ).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_1e6a29c4bb5c807418c5adebd89fb054 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e1\u003c/div\u003e","className": "empty"});
+ var popup_f73703ab3cd7e67a5e34979fded10caf = L.popup({"maxWidth": "100%"});
+ var html_efe4d63b481c7727b5ffce6addb9edc0 = $(`<div style="width:100%;height:100%;"><b>1. Start: Makrigianni / Acropolis Museum area</b><br>Best hotel/start area</div>`)[0];
+ popup_f73703ab3cd7e67a5e34979fded10caf.setContent(html_efe4d63b481c7727b5ffce6addb9edc0);
+ marker_958edd9bc655b7505766dd114c955d99.bindPopup(popup_f73703ab3cd7e67a5e34979fded10caf);
+ marker_958edd9bc655b7505766dd114c955d99.bindTooltip(`<div>1. Start: Makrigianni / Acropolis Museum area</div>`,{"sticky": true});
+ marker_958edd9bc655b7505766dd114c955d99.setIcon(div_icon_1e6a29c4bb5c807418c5adebd89fb054);
+
+
+ var marker_d1347539022a49075770911a10215877 = L.marker([37.9703, 23.7285],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_f100aadc39bdc73d8d96dd034d121933 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e2\u003c/div\u003e","className": "empty"});
+ var popup_bfab5e0753da8ac035b1897978ce8f32 = L.popup({"maxWidth": "100%"});
+ var html_ba43a58ae360b565b6dcc218da941c4e = $(`<div style="width:100%;height:100%;"><b>2. Theatre of Dionysus</b><br>Do this first from the south slope</div>`)[0];
+ popup_bfab5e0753da8ac035b1897978ce8f32.setContent(html_ba43a58ae360b565b6dcc218da941c4e);
+ marker_d1347539022a49075770911a10215877.bindPopup(popup_bfab5e0753da8ac035b1897978ce8f32);
+ marker_d1347539022a49075770911a10215877.bindTooltip(`<div>2. Theatre of Dionysus</div>`,{"sticky": true});
+ marker_d1347539022a49075770911a10215877.setIcon(div_icon_f100aadc39bdc73d8d96dd034d121933);
+
+
+ var marker_dc5bc746c991e8c83467180a2b1b6e27 = L.marker([37.9715, 23.7257],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_0add1dea2fb428b0f2d529301a1ece37 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e3\u003c/div\u003e","className": "empty"});
+ var popup_8a802a91969d58cb24141e9080471fdb = L.popup({"maxWidth": "100%"});
+ var html_ba4843bc7e9de49fc45dbb11ba88f343 = $(`<div style="width:100%;height:100%;"><b>3. Acropolis entrance / Propylaea</b><br>Walk uphill once</div>`)[0];
+ popup_8a802a91969d58cb24141e9080471fdb.setContent(html_ba4843bc7e9de49fc45dbb11ba88f343);
+ marker_dc5bc746c991e8c83467180a2b1b6e27.bindPopup(popup_8a802a91969d58cb24141e9080471fdb);
+ marker_dc5bc746c991e8c83467180a2b1b6e27.bindTooltip(`<div>3. Acropolis entrance / Propylaea</div>`,{"sticky": true});
+ marker_dc5bc746c991e8c83467180a2b1b6e27.setIcon(div_icon_0add1dea2fb428b0f2d529301a1ece37);
+
+
+ var marker_510d274c4e0c96a804162137a1bad2d2 = L.marker([37.9715, 23.7249],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_2512c13647d0ff535012a9bc4b8ab4bf = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e4\u003c/div\u003e","className": "empty"});
+ var popup_e2ab182cd832c17519ee55b9772bec20 = L.popup({"maxWidth": "100%"});
+ var html_7008bbc35f904b1a2205f8e73aadf815 = $(`<div style="width:100%;height:100%;"><b>4. Temple of Athena Nike</b><br>Right by the Propylaea</div>`)[0];
+ popup_e2ab182cd832c17519ee55b9772bec20.setContent(html_7008bbc35f904b1a2205f8e73aadf815);
+ marker_510d274c4e0c96a804162137a1bad2d2.bindPopup(popup_e2ab182cd832c17519ee55b9772bec20);
+ marker_510d274c4e0c96a804162137a1bad2d2.bindTooltip(`<div>4. Temple of Athena Nike</div>`,{"sticky": true});
+ marker_510d274c4e0c96a804162137a1bad2d2.setIcon(div_icon_2512c13647d0ff535012a9bc4b8ab4bf);
+
+
+ var marker_a39deeb926664b88b5b696cf1d0c4f60 = L.marker([37.9715, 23.7267],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_55defcc8e3a3c773f71047a39c5ae512 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e5\u003c/div\u003e","className": "empty"});
+ var popup_7cb6d055d128d6c333ef02d40f7f5b8c = L.popup({"maxWidth": "100%"});
+ var html_05d4973805cfd79db104b775a7951689 = $(`<div style="width:100%;height:100%;"><b>5. Parthenon</b><br>Main Acropolis stop</div>`)[0];
+ popup_7cb6d055d128d6c333ef02d40f7f5b8c.setContent(html_05d4973805cfd79db104b775a7951689);
+ marker_a39deeb926664b88b5b696cf1d0c4f60.bindPopup(popup_7cb6d055d128d6c333ef02d40f7f5b8c);
+ marker_a39deeb926664b88b5b696cf1d0c4f60.bindTooltip(`<div>5. Parthenon</div>`,{"sticky": true});
+ marker_a39deeb926664b88b5b696cf1d0c4f60.setIcon(div_icon_55defcc8e3a3c773f71047a39c5ae512);
+
+
+ var marker_c1b25da7206c350fd0269766fa9eace7 = L.marker([37.9721, 23.7264],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_452d61007113abcba387d6175463a483 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e6\u003c/div\u003e","className": "empty"});
+ var popup_87d8a94133b1c2d82b52a20cc8ca8fbe = L.popup({"maxWidth": "100%"});
+ var html_e95b4115be1f6501627ecb98c0a16dfd = $(`<div style="width:100%;height:100%;"><b>6. Erechtheion</b><br>Next to the Parthenon area</div>`)[0];
+ popup_87d8a94133b1c2d82b52a20cc8ca8fbe.setContent(html_e95b4115be1f6501627ecb98c0a16dfd);
+ marker_c1b25da7206c350fd0269766fa9eace7.bindPopup(popup_87d8a94133b1c2d82b52a20cc8ca8fbe);
+ marker_c1b25da7206c350fd0269766fa9eace7.bindTooltip(`<div>6. Erechtheion</div>`,{"sticky": true});
+ marker_c1b25da7206c350fd0269766fa9eace7.setIcon(div_icon_452d61007113abcba387d6175463a483);
+
+
+ var marker_9aa04f35513976dfe4146a4ae7964bf8 = L.marker([37.9708, 23.7246],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_9c9f22d764a0ff2ad61c05a5a6ba7f99 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e7\u003c/div\u003e","className": "empty"});
+ var popup_60e3c57e6d394b1848e8dbac444f0433 = L.popup({"maxWidth": "100%"});
+ var html_bc9e031366ab2d92aeb07d59b26a63ba = $(`<div style="width:100%;height:100%;"><b>7. Herod Atticus Odeon</b><br>Exit downhill toward the west/southwest</div>`)[0];
+ popup_60e3c57e6d394b1848e8dbac444f0433.setContent(html_bc9e031366ab2d92aeb07d59b26a63ba);
+ marker_9aa04f35513976dfe4146a4ae7964bf8.bindPopup(popup_60e3c57e6d394b1848e8dbac444f0433);
+ marker_9aa04f35513976dfe4146a4ae7964bf8.bindTooltip(`<div>7. Herod Atticus Odeon</div>`,{"sticky": true});
+ marker_9aa04f35513976dfe4146a4ae7964bf8.setIcon(div_icon_9c9f22d764a0ff2ad61c05a5a6ba7f99);
+
+
+ var marker_d2652fd17ba263b9c26db680b0f9f840 = L.marker([37.9747, 23.722],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_3599d78c8e43d4f948040ce4a33f05d8 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e8\u003c/div\u003e","className": "empty"});
+ var popup_f8922dc39c39dd3c3271137f8a282b7b = L.popup({"maxWidth": "100%"});
+ var html_3e6e7b2d8f80eb2af3b0793b610bc81e = $(`<div style="width:100%;height:100%;"><b>8. Ancient Agora of Athens</b><br>Next major walkable site after Acropolis</div>`)[0];
+ popup_f8922dc39c39dd3c3271137f8a282b7b.setContent(html_3e6e7b2d8f80eb2af3b0793b610bc81e);
+ marker_d2652fd17ba263b9c26db680b0f9f840.bindPopup(popup_f8922dc39c39dd3c3271137f8a282b7b);
+ marker_d2652fd17ba263b9c26db680b0f9f840.bindTooltip(`<div>8. Ancient Agora of Athens</div>`,{"sticky": true});
+ marker_d2652fd17ba263b9c26db680b0f9f840.setIcon(div_icon_3599d78c8e43d4f948040ce4a33f05d8);
+
+
+ var marker_21eecea50d154dbcbbb374ae215388ae = L.marker([37.9752, 23.7236],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_abc2ce74bd065cf6b33ca61a71043213 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e9\u003c/div\u003e","className": "empty"});
+ var popup_05364d40d34c065204d3aeca01bb4761 = L.popup({"maxWidth": "100%"});
+ var html_1400211e4a2d94ac87db2346521e20be = $(`<div style="width:100%;height:100%;"><b>9. Museum of the Ancient Agora / Stoa of Attalos</b><br>Inside Agora</div>`)[0];
+ popup_05364d40d34c065204d3aeca01bb4761.setContent(html_1400211e4a2d94ac87db2346521e20be);
+ marker_21eecea50d154dbcbbb374ae215388ae.bindPopup(popup_05364d40d34c065204d3aeca01bb4761);
+ marker_21eecea50d154dbcbbb374ae215388ae.bindTooltip(`<div>9. Museum of the Ancient Agora / Stoa of Attalos</div>`,{"sticky": true});
+ marker_21eecea50d154dbcbbb374ae215388ae.setIcon(div_icon_abc2ce74bd065cf6b33ca61a71043213);
+
+
+ var marker_7d8358490c30c06dcb3dafe2baad5ca2 = L.marker([37.9762, 23.7251],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_a12dec601e0a25f842ad1350b975ac27 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e10\u003c/div\u003e","className": "empty"});
+ var popup_022f2544f0bcb39102926da155af284f = L.popup({"maxWidth": "100%"});
+ var html_3405d97b02cacddb68d1a0e4474dc7d0 = $(`<div style="width:100%;height:100%;"><b>10. Monastiraki Square</b><br>Natural exit from Agora</div>`)[0];
+ popup_022f2544f0bcb39102926da155af284f.setContent(html_3405d97b02cacddb68d1a0e4474dc7d0);
+ marker_7d8358490c30c06dcb3dafe2baad5ca2.bindPopup(popup_022f2544f0bcb39102926da155af284f);
+ marker_7d8358490c30c06dcb3dafe2baad5ca2.bindTooltip(`<div>10. Monastiraki Square</div>`,{"sticky": true});
+ marker_7d8358490c30c06dcb3dafe2baad5ca2.setIcon(div_icon_a12dec601e0a25f842ad1350b975ac27);
+
+
+ var marker_e991ed4717db4d3730a940477c44ce41 = L.marker([37.9737, 23.7295],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_75dea9fcdd07c61bdc3321cc544ac46c = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e11\u003c/div\u003e","className": "empty"});
+ var popup_1ef134e8599a2bde074ef6b240b71977 = L.popup({"maxWidth": "100%"});
+ var html_e40459c15e673a8476853cd938893c62 = $(`<div style="width:100%;height:100%;"><b>11. Plaka walk</b><br>Shops, restaurants, old Athens streets</div>`)[0];
+ popup_1ef134e8599a2bde074ef6b240b71977.setContent(html_e40459c15e673a8476853cd938893c62);
+ marker_e991ed4717db4d3730a940477c44ce41.bindPopup(popup_1ef134e8599a2bde074ef6b240b71977);
+ marker_e991ed4717db4d3730a940477c44ce41.bindTooltip(`<div>11. Plaka walk</div>`,{"sticky": true});
+ marker_e991ed4717db4d3730a940477c44ce41.setIcon(div_icon_75dea9fcdd07c61bdc3321cc544ac46c);
+
+
+ var marker_9c700118ad6431a98fb4ead5a3aa03e5 = L.marker([37.9702, 23.7318],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_85df2cbd4078f40163ac9ff2d1717a4a = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e12\u003c/div\u003e","className": "empty"});
+ var popup_a82e3c9821c74be7020b62927e1562c6 = L.popup({"maxWidth": "100%"});
+ var html_8010c4322fe21d2551ee9b72a14b70c5 = $(`<div style="width:100%;height:100%;"><b>12. Arch of Hadrian</b><br>Short walk/pass-by from Plaka</div>`)[0];
+ popup_a82e3c9821c74be7020b62927e1562c6.setContent(html_8010c4322fe21d2551ee9b72a14b70c5);
+ marker_9c700118ad6431a98fb4ead5a3aa03e5.bindPopup(popup_a82e3c9821c74be7020b62927e1562c6);
+ marker_9c700118ad6431a98fb4ead5a3aa03e5.bindTooltip(`<div>12. Arch of Hadrian</div>`,{"sticky": true});
+ marker_9c700118ad6431a98fb4ead5a3aa03e5.setIcon(div_icon_85df2cbd4078f40163ac9ff2d1717a4a);
+
+
+ var marker_3a3e221069729acb75972bf2263b45dc = L.marker([37.9693, 23.7331],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_9840b6da5837e6d4d47173e2c7c17a3a = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e13\u003c/div\u003e","className": "empty"});
+ var popup_a8505894af2b4a126e3f2dd7514e7956 = L.popup({"maxWidth": "100%"});
+ var html_c0b800317d42b373706711eb167c573f = $(`<div style="width:100%;height:100%;"><b>13. Temple of Olympian Zeus</b><br>Exterior/pass-by or short stop</div>`)[0];
+ popup_a8505894af2b4a126e3f2dd7514e7956.setContent(html_c0b800317d42b373706711eb167c573f);
+ marker_3a3e221069729acb75972bf2263b45dc.bindPopup(popup_a8505894af2b4a126e3f2dd7514e7956);
+ marker_3a3e221069729acb75972bf2263b45dc.bindTooltip(`<div>13. Temple of Olympian Zeus</div>`,{"sticky": true});
+ marker_3a3e221069729acb75972bf2263b45dc.setIcon(div_icon_9840b6da5837e6d4d47173e2c7c17a3a);
+
+
+ var marker_b5b56c8a97aa3d0cba762a77bce74e51 = L.marker([37.9683, 23.7415],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_ccd1bc4180aeffef109fa665c79d8edc = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e14\u003c/div\u003e","className": "empty"});
+ var popup_b7629602e9ade50ebf12f595210ba048 = L.popup({"maxWidth": "100%"});
+ var html_2ef9ac0521c30be9ae0bd3f99486228c = $(`<div style="width:100%;height:100%;"><b>14. Panathenaic Stadium</b><br>Farther east, better by taxi if hot</div>`)[0];
+ popup_b7629602e9ade50ebf12f595210ba048.setContent(html_2ef9ac0521c30be9ae0bd3f99486228c);
+ marker_b5b56c8a97aa3d0cba762a77bce74e51.bindPopup(popup_b7629602e9ade50ebf12f595210ba048);
+ marker_b5b56c8a97aa3d0cba762a77bce74e51.bindTooltip(`<div>14. Panathenaic Stadium</div>`,{"sticky": true});
+ marker_b5b56c8a97aa3d0cba762a77bce74e51.setIcon(div_icon_ccd1bc4180aeffef109fa665c79d8edc);
+
+
+ var marker_8f280506e7ffe9ca6acc6b6740fb7946 = L.marker([37.9755, 23.7348],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_97b2611c5f4418183e92931a9aa9f7a9 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e15\u003c/div\u003e","className": "empty"});
+ var popup_6787d437587accaee8681ec7ed907c06 = L.popup({"maxWidth": "100%"});
+ var html_79f617de909b6f2b4edff422e650bfb8 = $(`<div style="width:100%;height:100%;"><b>15. Syntagma Square</b><br>After stadium if walking/taxiing back north</div>`)[0];
+ popup_6787d437587accaee8681ec7ed907c06.setContent(html_79f617de909b6f2b4edff422e650bfb8);
+ marker_8f280506e7ffe9ca6acc6b6740fb7946.bindPopup(popup_6787d437587accaee8681ec7ed907c06);
+ marker_8f280506e7ffe9ca6acc6b6740fb7946.bindTooltip(`<div>15. Syntagma Square</div>`,{"sticky": true});
+ marker_8f280506e7ffe9ca6acc6b6740fb7946.setIcon(div_icon_97b2611c5f4418183e92931a9aa9f7a9);
+
+
+ var marker_9758700ca8942d40efc05742c4b34f78 = L.marker([37.9756, 23.7353],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_399a5ec275db368682b0dd5edc7e7a70 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e16\u003c/div\u003e","className": "empty"});
+ var popup_2bf002e6446433036400770f96d82ac3 = L.popup({"maxWidth": "100%"});
+ var html_8370b184762975b9bd1f500c29c8a14f = $(`<div style="width:100%;height:100%;"><b>16. Hellenic Parliament / Unknown Soldier / Changing of Guard</b><br>Time for top of the hour if possible</div>`)[0];
+ popup_2bf002e6446433036400770f96d82ac3.setContent(html_8370b184762975b9bd1f500c29c8a14f);
+ marker_9758700ca8942d40efc05742c4b34f78.bindPopup(popup_2bf002e6446433036400770f96d82ac3);
+ marker_9758700ca8942d40efc05742c4b34f78.bindTooltip(`<div>16. Hellenic Parliament / Unknown Soldier / Changing of Guard</div>`,{"sticky": true});
+ marker_9758700ca8942d40efc05742c4b34f78.setIcon(div_icon_399a5ec275db368682b0dd5edc7e7a70);
+
+
+ var marker_f9bce92f26cb653dccfc9825bd57619b = L.marker([37.977, 23.7336],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_56e42edf99cd802ff9ce7f38ed1470ba = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e17\u003c/div\u003e","className": "empty"});
+ var popup_b347748a9580d5debcba7c4fc3c43b8a = L.popup({"maxWidth": "100%"});
+ var html_ad637dbd0e0277fd168bf8e4e885b309 = $(`<div style="width:100%;height:100%;"><b>17. National Historical Museum / Old Parliament</b><br>Pass-by</div>`)[0];
+ popup_b347748a9580d5debcba7c4fc3c43b8a.setContent(html_ad637dbd0e0277fd168bf8e4e885b309);
+ marker_f9bce92f26cb653dccfc9825bd57619b.bindPopup(popup_b347748a9580d5debcba7c4fc3c43b8a);
+ marker_f9bce92f26cb653dccfc9825bd57619b.bindTooltip(`<div>17. National Historical Museum / Old Parliament</div>`,{"sticky": true});
+ marker_f9bce92f26cb653dccfc9825bd57619b.setIcon(div_icon_56e42edf99cd802ff9ce7f38ed1470ba);
+
+
+ var marker_5db5df58d84da0ab641c8e0b681b755e = L.marker([37.9805, 23.7347],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_1227cd292f1e7e084682edfa494863dd = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e18\u003c/div\u003e","className": "empty"});
+ var popup_051e3a465c985b341e56465f2e0cfda2 = L.popup({"maxWidth": "100%"});
+ var html_9d89b7de2c7e1be5717e19544688e5a1 = $(`<div style="width:100%;height:100%;"><b>18. Academy of Athens</b><br>Part of neoclassical trilogy</div>`)[0];
+ popup_051e3a465c985b341e56465f2e0cfda2.setContent(html_9d89b7de2c7e1be5717e19544688e5a1);
+ marker_5db5df58d84da0ab641c8e0b681b755e.bindPopup(popup_051e3a465c985b341e56465f2e0cfda2);
+ marker_5db5df58d84da0ab641c8e0b681b755e.bindTooltip(`<div>18. Academy of Athens</div>`,{"sticky": true});
+ marker_5db5df58d84da0ab641c8e0b681b755e.setIcon(div_icon_1227cd292f1e7e084682edfa494863dd);
+
+
+ var marker_b4f2a38ffc8f247449e6d2bf21fb409b = L.marker([37.9802, 23.7338],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_d954137ac805a72cd02662316e9d2497 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e19\u003c/div\u003e","className": "empty"});
+ var popup_c921ba0ccdcf35e67deaecd14cfb2a72 = L.popup({"maxWidth": "100%"});
+ var html_c68c2baaacfc40decf50619e6a3e5b0c = $(`<div style="width:100%;height:100%;"><b>19. National and Kapodistrian University of Athens</b><br>Part of trilogy</div>`)[0];
+ popup_c921ba0ccdcf35e67deaecd14cfb2a72.setContent(html_c68c2baaacfc40decf50619e6a3e5b0c);
+ marker_b4f2a38ffc8f247449e6d2bf21fb409b.bindPopup(popup_c921ba0ccdcf35e67deaecd14cfb2a72);
+ marker_b4f2a38ffc8f247449e6d2bf21fb409b.bindTooltip(`<div>19. National and Kapodistrian University of Athens</div>`,{"sticky": true});
+ marker_b4f2a38ffc8f247449e6d2bf21fb409b.setIcon(div_icon_d954137ac805a72cd02662316e9d2497);
+
+
+ var marker_486ebd6f6f8109bb9d4c797a324fb036 = L.marker([37.98, 23.7326],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_2f9b1b65fc6b89a9d45b1a7a0ebbda40 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e20\u003c/div\u003e","className": "empty"});
+ var popup_94f1187c64e6120cc1b79785a8285147 = L.popup({"maxWidth": "100%"});
+ var html_81c80fdacd57188cf91112de5c99b8ea = $(`<div style="width:100%;height:100%;"><b>20. National Library of Greece</b><br>Part of trilogy</div>`)[0];
+ popup_94f1187c64e6120cc1b79785a8285147.setContent(html_81c80fdacd57188cf91112de5c99b8ea);
+ marker_486ebd6f6f8109bb9d4c797a324fb036.bindPopup(popup_94f1187c64e6120cc1b79785a8285147);
+ marker_486ebd6f6f8109bb9d4c797a324fb036.bindTooltip(`<div>20. National Library of Greece</div>`,{"sticky": true});
+ marker_486ebd6f6f8109bb9d4c797a324fb036.setIcon(div_icon_2f9b1b65fc6b89a9d45b1a7a0ebbda40);
+
+
+ var marker_e6039006d546d0d011009e4aed710652 = L.marker([37.9838, 23.7436],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_9da8b9687cd81b10b44239333af53371 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e21\u003c/div\u003e","className": "empty"});
+ var popup_3ed180e304690f0c3edfc6acc3f44b38 = L.popup({"maxWidth": "100%"});
+ var html_25cbbd30ba72a2433239e4d096758696 = $(`<div style="width:100%;height:100%;"><b>21. Mount Lycabettus</b><br>Do by car/taxi, ideally late afternoon</div>`)[0];
+ popup_3ed180e304690f0c3edfc6acc3f44b38.setContent(html_25cbbd30ba72a2433239e4d096758696);
+ marker_e6039006d546d0d011009e4aed710652.bindPopup(popup_3ed180e304690f0c3edfc6acc3f44b38);
+ marker_e6039006d546d0d011009e4aed710652.bindTooltip(`<div>21. Mount Lycabettus</div>`,{"sticky": true});
+ marker_e6039006d546d0d011009e4aed710652.setIcon(div_icon_9da8b9687cd81b10b44239333af53371);
+
+
+ var marker_2f7a576c8bdfcdba987c18f88755567b = L.marker([37.9649, 23.7245],{}).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var div_icon_2f1428b9450638d734e18fa255a34802 = L.divIcon({"html": "\n \u003cdiv style=\"background:#1f77b4;color:white;border-radius:50%;width:28px;height:28px;\n text-align:center;line-height:28px;font-size:13px;font-weight:bold;border:2px solid white;\n box-shadow:0 0 3px #333;\"\u003e22\u003c/div\u003e","className": "empty"});
+ var popup_ac4856d36dbaef1e257b89e96143f38f = L.popup({"maxWidth": "100%"});
+ var html_a8a7d0896aeb5746a7bb80bedd0baa6f = $(`<div style="width:100%;height:100%;"><b>22. Koukaki lunch/dinner area</b><br>Better as lunch after Acropolis or dinner at end</div>`)[0];
+ popup_ac4856d36dbaef1e257b89e96143f38f.setContent(html_a8a7d0896aeb5746a7bb80bedd0baa6f);
+ marker_2f7a576c8bdfcdba987c18f88755567b.bindPopup(popup_ac4856d36dbaef1e257b89e96143f38f);
+ marker_2f7a576c8bdfcdba987c18f88755567b.bindTooltip(`<div>22. Koukaki lunch/dinner area</div>`,{"sticky": true});
+ marker_2f7a576c8bdfcdba987c18f88755567b.setIcon(div_icon_2f1428b9450638d734e18fa255a34802);
+
+
+ var poly_line_7f2edcc951c508769695c07f2950fa3a = L.polyline(
+ [[37.9683, 23.7282], [37.9703, 23.7285], [37.9715, 23.7257], [37.9715, 23.7249], [37.9715, 23.7267], [37.9721, 23.7264], [37.9708, 23.7246], [37.9747, 23.722], [37.9752, 23.7236], [37.9762, 23.7251], [37.9737, 23.7295], [37.9702, 23.7318], [37.9693, 23.7331], [37.9683, 23.7415], [37.9755, 23.7348], [37.9756, 23.7353], [37.977, 23.7336], [37.9805, 23.7347], [37.9802, 23.7338], [37.98, 23.7326], [37.9838, 23.7436], [37.9649, 23.7245]],
+ {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.65, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+ ).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+
+
+ var polygon_0b513e81372846157748d9dc43b21ff3 = L.polygon(
+ [[37.9665, 23.7255], [37.9665, 23.7315], [37.9707, 23.7315], [37.9707, 23.7255]],
+ {"bubblingMouseEvents": true, "color": "green", "fill": true, "fillColor": "green", "fillOpacity": 0.08, "opacity": 1.0, "weight": 2}
+ ).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var popup_ebd83f074cb9064b59f8227f6aa07ceb = L.popup({"maxWidth": "100%"});
+ var html_2ef1e99b68c32ebc9b71ff0d5ba71612 = $(`<div style="width:100%;height:100%;">Makrigianni / Acropolis Museum - best family base</div>`)[0];
+ popup_ebd83f074cb9064b59f8227f6aa07ceb.setContent(html_2ef1e99b68c32ebc9b71ff0d5ba71612);
+ polygon_0b513e81372846157748d9dc43b21ff3.bindPopup(popup_ebd83f074cb9064b59f8227f6aa07ceb);
+ polygon_0b513e81372846157748d9dc43b21ff3.bindTooltip(`<div>Makrigianni / Acropolis Museum - best family base</div>`,{"sticky": true});
+
+
+ var polygon_4f31c4efdd9606d332292818986ab59c = L.polygon(
+ [[37.971, 23.728], [37.971, 23.734], [37.9753, 23.734], [37.9753, 23.728]],
+ {"bubblingMouseEvents": true, "color": "green", "fill": true, "fillColor": "green", "fillOpacity": 0.08, "opacity": 1.0, "weight": 2}
+ ).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var popup_95f430700d1507ff37af539e310b9366 = L.popup({"maxWidth": "100%"});
+ var html_d634585e7364d20e016c3cba0ce20fd8 = $(`<div style="width:100%;height:100%;">Plaka - restaurants, shops, charm</div>`)[0];
+ popup_95f430700d1507ff37af539e310b9366.setContent(html_d634585e7364d20e016c3cba0ce20fd8);
+ polygon_4f31c4efdd9606d332292818986ab59c.bindPopup(popup_95f430700d1507ff37af539e310b9366);
+ polygon_4f31c4efdd9606d332292818986ab59c.bindTooltip(`<div>Plaka - restaurants, shops, charm</div>`,{"sticky": true});
+
+
+ var polygon_2d0560d2679dae048bdc64b8dee0a231 = L.polygon(
+ [[37.9618, 23.7215], [37.9618, 23.7292], [37.9675, 23.7292], [37.9675, 23.7215]],
+ {"bubblingMouseEvents": true, "color": "green", "fill": true, "fillColor": "green", "fillOpacity": 0.08, "opacity": 1.0, "weight": 2}
+ ).addTo(map_d8cae877160b1ed4596f1c7ef54cd798);
+ var popup_211d0135a4ca63a471b1e82070caef08 = L.popup({"maxWidth": "100%"});
+ var html_ffeaf9e7a3400592b39990431e56f4e2 = $(`<div style="width:100%;height:100%;">Koukaki - calmer local base</div>`)[0];
+ popup_211d0135a4ca63a471b1e82070caef08.setContent(html_ffeaf9e7a3400592b39990431e56f4e2);
+ polygon_2d0560d2679dae048bdc64b8dee0a231.bindPopup(popup_211d0135a4ca63a471b1e82070caef08);
+ polygon_2d0560d2679dae048bdc64b8dee0a231.bindTooltip(`<div>Koukaki - calmer local base</div>`,{"sticky": true});
+
+</script>
+</html>

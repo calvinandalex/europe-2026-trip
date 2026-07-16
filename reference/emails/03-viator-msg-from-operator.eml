@@ -1,0 +1,812 @@
+Delivered-To: calvinbagley@gmail.com
+Received: by 2002:a05:7412:4e22:b0:1d7:9a57:171c with SMTP id gb34csp412452rdb;
+        Thu, 21 May 2026 05:42:47 -0700 (PDT)
+X-Received: by 2002:a05:6214:33c3:b0:8ca:7f:89b1 with SMTP id 6a1803df08f44-8cc6e32ffa3mr41285626d6.12.1779367367218;
+        Thu, 21 May 2026 05:42:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779367367; cv=none;
+        d=google.com; s=arc-20240605;
+        b=DFzND5EOGTFzITb0ylweEraORpjpEEhhB4YyMZpNYBZU+jhm3B0auBHi2SKN3+D0Xl
+         gy7UB5P7HRfGLdfVugqq72wjp617eFEuY1T/bc4bcT73WohmxatbFkgMCDRW1h8oSEMm
+         Cx1H52xxlgWICpFtiqu/g3L63pPUwhSgKYqJv+bFva6WC/OUC6i63oepxfCZN19E3aJe
+         Fem0W+dfOCbt9PS0wUigNjbYbcfDUcFBRbALpmxMOQhI9CTjaZ+3wQcXuGUS40cmesnw
+         UJN4BYRnA3G1gy61KCqG4XvsQLoOAChaOcvjE2hzQmVKkRmjydjkfAz3DTyqKjQJn4tq
+         Oaag==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:feedback-id:message-id:references:to:subject:date:from
+         :dkim-signature:dkim-signature;
+        bh=SzIjxi4Fpqu0z3FvoYwEtVCpNHdwNTa3IaSxPjH7pho=;
+        fh=uQyYQraKfQm/a1gX6BKXv6s/Cl3sXqdJZNoAlR3rnsc=;
+        b=JcS2EzI7fztFxmHSogai5PRa46N7Fu9935EhJy3KStOXJwG9mqLsPKz6A9OyhYrZgG
+         BhBSsQ7wA09uiBJ4wglQpPVOaS1V9WmpTBXh+TZ10LnUzAEvJJ2KWCjqCXu1Z1yKqf7a
+         qpvoCfF2mRXCnqXQ/QzbKGtROIVjDiAzOHAFjpHXKQb6VXHIRCaR7yn1TKdK/YD4mxO1
+         oyIukDaiSMdVseNqHXGkW7SlTVV+yEd5DM6OWLiN54pJBP1TLCQPbq4YP7SUUSt/Xo91
+         5RpVlDSDN75ppuWhSeCXf+vQKmtpDCCcUpuzv80zd9wAex50Q7JDkZ/5KTtq06p2/Y3T
+         OwxA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@pm.mtasv.net header.s=pm20250806 header.b=qdkXHs1C;
+       dkim=pass header.i=@expmessaging.tripadvisor.com header.s=20221117033212pm header.b=J0XgUMtH;
+       spf=pass (google.com: domain of pm_bounces@pm-bounces.expmessaging.tripadvisor.com designates 50.31.156.118 as permitted sender) smtp.mailfrom=pm_bounces@pm-bounces.expmessaging.tripadvisor.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=expmessaging.tripadvisor.com
+Return-Path: <pm_bounces@pm-bounces.expmessaging.tripadvisor.com>
+Received: from sc-ord-mta118.mtasv.net (sc-ord-mta118.mtasv.net. [50.31.156.118])
+        by mx.google.com with ESMTPS id 6a1803df08f44-8cc768cd4eesi5302646d6.110.2026.05.21.05.42.46
+        for <calvinbagley@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 May 2026 05:42:47 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pm_bounces@pm-bounces.expmessaging.tripadvisor.com designates 50.31.156.118 as permitted sender) client-ip=50.31.156.118;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@pm.mtasv.net header.s=pm20250806 header.b=qdkXHs1C;
+       dkim=pass header.i=@expmessaging.tripadvisor.com header.s=20221117033212pm header.b=J0XgUMtH;
+       spf=pass (google.com: domain of pm_bounces@pm-bounces.expmessaging.tripadvisor.com designates 50.31.156.118 as permitted sender) smtp.mailfrom=pm_bounces@pm-bounces.expmessaging.tripadvisor.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=expmessaging.tripadvisor.com
+X-KumoRef: eyJfQF8iOiJcXF8vIiwicmVjaXBpZW50IjoiY2FsdmluYmFnbGV5QGdtYWlsLmNvbSJ9
+DKIM-Signature: v=1; a=rsa-sha256; d=pm.mtasv.net; s=pm20250806; c=relaxed/relaxed;
+	bh=SzIjxi4Fpqu0z3FvoYwEtVCpNHdwNTa3IaSxPjH7pho=;
+	h=from:to:subject:date:mime-version:content-type:sender:cc:date:message-id;
+	t=1779367366; x=1779972166;
+	b=qdkXHs1CX+lUi6h3W3jAcpX/hEAimPzCJZ01zAMEucKeo7N35PN4/Ql643qr0/z+K4hY6o91k
+	LpwLktx4dJzs3OBPxl9ggEaYemqmrFplW6048+hs+1U/QJsirq8nqYYDmejNwZ5JurJeWYrSZI1
+	Vl2YbAVA1vqqHEr3MlI2s0vCyLjGBCnKCa3CX1SVdnEXj0kmSRZ7c2fXvkRkMjA95tUmr8qSAVD
+	3/pRI9AC0ONN9eKNEXOsSyf/3wtl/cUqkI2Rv1JtJGA1lTmyfpm4egbDQk6sM1lEFeZYM7KlsAs
+	7MlkJ9yHtDxOmVnufBgC6W4kw/tEck5e2ojkdpO2zM4Q==;
+Received: from ip-172-26-31-242.us-east-2.compute.internal (172.26.31.242)
+  by production-pmta-useast2.internal.postmarkapp.com (KumoMTA 10.97.242.233) 
+  with ESMTP id 91d42e98551211f1aaad0261883958bb for <calvinbagley@gmail.com>;
+  Thu, 21 May 2026 12:42:46 +0000
+DKIM-Signature: v=1; a=rsa-sha256; d=expmessaging.tripadvisor.com;
+	s=20221117033212pm; c=relaxed/relaxed;
+	i=NOT-9f18e71e-e1a2-4950-ae41-8a1897be3046@expmessaging.tripadvisor.com;
+	t=1779367366; x=1779540166;
+	h=date:date:from:from:message-id:reply-to:sender:subject:subject:to:to:cc:
+	references:feedback-id:mime-version:content-type;
+	bh=SzIjxi4Fpqu0z3FvoYwEtVCpNHdwNTa3IaSxPjH7pho=;
+	b=J0XgUMtHSv3onfz34CMYi+aH3tPQkL7cOhrG9dvcGzSPNfr2FZdN6jBhQ3IP24ZOz/GyXQ2Fg4w
+	hbbP62xX2l8x0U6O2JRaSfwEvY4JQmD9w2R1YKbk4ZpxlnfjCCU2K83x7msyhwQJNRz+nWmpDwW54
+	tcpcKmOzOgXOwkN4ubY=
+From: Viator
+	<NOT-9f18e71e-e1a2-4950-ae41-8a1897be3046@expmessaging.tripadvisor.com>
+Date: Thu, 21 May 2026 12:42:46 +0000
+Subject: Your tour operator sent you a message about your Viator booking
+To: calvinbagley@gmail.com
+References: <CNV-ddfc4361-b5f8-40ae-bd98-8f2f7b0d5e51@viator.com>
+Message-Id: <MES-8693fc38-9640-4aee-b340-d758394c29d4@viator.com>
+X-PM-KeepID: true
+Feedback-ID: s4306385-dmktY2xjLXZpYXRvci10cmF2ZWxlcg==:s4306385:a78779:postmark
+X-Complaints-To: abuse@postmarkapp.com
+X-Job: 78779_4306385
+X-PM-Message-Id: aaa08841-60b2-4344-a679-2437bf3d311b
+X-PM-Tag: vi-clc-viator-traveler
+X-PM-RCPT: |bTB8Nzg3Nzl8NDMwNjM4NXxjYWx2aW5iYWdsZXlAZ21haWwuY29t|
+X-PM-Message-Options: v1;1.0zGly_GcUKFrLtcO1XjUrQ.dH94ys_NohVRzie0AnoZRwgk5YzXDumwY87aXMXMcT46TQL4wsYf-m_3k9sGsAJoW588tNXCTsPu1HJgIaNeCpYtNi3cIsB7qbv6SjPtYygqZO6nU5_hPZIzYNs6pF9JR-OcPAhqzwGL3OrOK_B6Gyqf4lxq1snysOX2o6bxgBsUzDZpE5O1qFZ1kvI9rwnX
+X-PM-Message-Details: v1;1.fAYknVD3AjmcaRDwPc1NBw.TiGiolrYeCYXC6hogTUmPh0WzJSrBvDfoTP24vqcOV-L3Jgi7Rk0CQWN_oXFT5VDi5_XerJ5yKNlpCwBeKQygD3gBrm21gZZRt5tlnXh-sktGrcpnWshN0AnF9lTfAqZ6o75JBtYVQ4zaUbMGW2G3ncJtCp3cCoMmi1MKNfIcxxhbwtzXoTmP1uy3Iyo5oSaCrLQuupzHVuoER4RYvud9pQ13OCEcWQWwjOd0bZL9BC_3kvvTYRp_Ota6Xqx4bDepOVuBCHkogVil1r-dKwcSF9mml_5cgniFujKjrujxQG5PD9p6NGEbqEM0awELEC3oGfmJBpBL7VwmCc_K3RiHVboGEAXqTfVLeIC83Sk1T4
+MIME-Version: 1.0
+X-virtual-MTA: ord-50-31-156-118
+X-PM-MTA-Pool: transactional-1
+Content-Type: multipart/alternative;
+	boundary=mk3-fe50de3342f54ca584c3c05d9ca8af40; charset=UTF-8
+
+--mk3-fe50de3342f54ca584c3c05d9ca8af40
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+##^- Please type your reply above this line -^##
+
+Your tour operator sent you a message:
+
+Dear Calvin,<br/><br/>Thank you very much for choosing to book with us! We =
+are delighted to let you know that our experienced team is dedicated to ens=
+uring you enjoy a truly unforgettable tour experience.<br/><br/>Upon your a=
+rrival, our representative will be greeting you at the cruise port and will=
+ be easily identifiable by a sign reading =E2=80=9CJ A T.=E2=80=9D As your =
+tour date approaches, we will provide you with the exact pickup time and  a=
+dditional details.<br/><br/>Should you have any questions or require assist=
+ance, please do not hesitate to contact us<br/><br/>Best regards,<br/>Rusla=
+n<br/><br/>
+
+View conversation in Booking Details https://track.pstmrk.it/3ts/www.viator=
+.com%2Fauto-login%2FBD64C785ECDABBE4FF6FEEBCE630015D-FFEA71C5F9B343E61FF47B=
+C172A779D645E10663823D1DD7AD950CB8C8DE93BA21E034319E953B2D5F69F87857446AB11=
+7EE4FFAE308394CA89E59DB4138814772DCC8C829952DC46F6F18314BBE43A7A5DA7EF39FDA=
+75A4A5FD41B6E18DD5FB510C2F2D1877E598160BC18347265C601827231C3449843C10A2422=
+9CDE17CBA7DD3800BE4066143CCD47E7DBD9BE566B6ECD62DEF4D39689B1A44C620FD113E0E=
+60BCAD30292E28B934DDF3E64D5B74%3Fdlim%3D953%26m%3D58827%26deeplink%3DCONTAC=
+T_OPERATOR/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/2/HXb6AKDih_
+
+Booking Reference:: BR-1399735385
+
+
+Please do not reply directly to this email. This was sent from an address t=
+hat cannot accept responses. For questions or assistance, <a href=3D"https:=
+//www.viator.com/faq?m=3D58827" target=3D"_blank" alias=3D"FOOTERHELPCENTER=
+LINK" style=3D"text-decoration:none; color: #0000EE;">visit our Help Center=
+</a>.
+
+(c) 2024 Viator, Inc. All rights reserved.
+
+--mk3-fe50de3342f54ca584c3c05d9ca8af40
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xml=
+ns=3D"http://www.w3.org/1999/xhtml" xmlns:v=3D"urn:schemas-microsoft-com:vm=
+l" xmlns:o=3D"urn:schemas-microsoft-com:office:office"><head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8=
+">
+    <!--various mobile fix meta tags-->
+    <meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D=
+1.0">
+    <meta name=3D"apple-mobile-web-app-capable" content=3D"yes">
+    <meta content=3D"yes" name=3D"apple-touch-fullscreen">
+    <meta name=3D"apple-mobile-web-app-status-bar-style" content=3D"black">
+    <meta name=3D"format-detection" content=3D"telephone=3Dno">
+    <meta http-equiv=3D"X-UA-Compatible" content=3D"IE=3Dedge">
+    <meta name=3D"x-apple-disable-message-reformatting">
+   =20
+    <!--<![endif]-->
+</head>
+<body style=3D"min-width: 100%; padding: 0; margin: 0; -webkit-text-size-ad=
+just: none; -ms-text-size-adjust: 100%; background-color: #ffffff;" bgcolor=
+=3D"#ffffff">
+
+
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"background-color: #f5f5f5;">
+    <tbody><tr>
+      <td align=3D"center" valign=3D"top">
+        <br><p class=3D"delimiter" style=3D"color: #4D4D4D; font-size: 12px=
+; font-family: Helvetica, Arial, sans-serif;">##^- Please type your reply a=
+bove this line -^##</p><br>
+      </td>
+    </tr>
+    <tr>
+        <td align=3D"center" style=3D"padding-top:16px;">
+            <table width=3D"555" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"border-collapse:separate;width:550px;background-color:#ffff=
+ff;">
+                <tbody><tr>
+                    <td>
+                        <table width=3D"100%" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0" style=3D"width:100%;border-collapse:separate;">
+                            <tbody><tr>
+                                <td style=3D"padding-top: 24px; padding-bot=
+tom: 24px">
+                                    <table width=3D"100%" border=3D"0" cell=
+spacing=3D"0" cellpadding=3D"0" style=3D"width:100%;border-collapse:separat=
+e;">
+                                        <tbody><tr>
+                                            <td align=3D"center" valign=3D"=
+top" style=3D"font-family: Helvetica, Arial, sans-serif;font-size: 18px; li=
+ne-height: 24px;color:#000000;">
+                                                <a href=3D"https://track.ps=
+tmrk.it/3s/www.viator.com%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a67=
+9-2437bf3d311b/1/62HtxfaxnF" target=3D"_blank" alias=3D"HomeLink" style=3D"=
+color:#000000;text-decoration:none;">
+                                                    <img src=3D"https://sta=
+tic.crm.tacdn.com/vt/re/header/rebrand_logo_viator_header.png" height=3D"70=
+" border=3D"0" style=3D"border: 0; display:block;height:70px;" alt=3D"Viato=
+r, a Tripadvisor Company ">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody></table>
+
+
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" bgco=
+lor=3D"#f5f5f5">
+    <tbody><tr>
+        <td align=3D"center" valign=3D"top">
+            <div class=3D"f-fallback">
+                <table border=3D"0" cellpadding=3D"0" cellspacing=3D"0" wid=
+th=3D"555">
+    <tbody><tr>
+        <td align=3D"left" text-align=3D"left">
+            <p style=3D"padding: 16px 0; font-weight: bold; font-family: He=
+lvetica, Arial, sans-serif; font-size: 18px; line-height: 24px; color: #000=
+000; mso-line-height-rule: exactly;" class=3D"commonClass">
+                <span>Your tour operator sent you a message.</span>
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td align=3D"left" width=3D"100%" style=3D"padding: 16px 32px; back=
+ground-color: #FFFFFF; word-wrap: break-word; font-family: Helvetica, Arial=
+, sans-serif; font-size: 18px; line-height: 24px; color: #000000; mso-line-=
+height-rule: exactly;padding: 16px 32px; background-color: #FFFFFF; word-wr=
+ap: break-word; font-family: Helvetica, Arial, sans-serif; font-size: 18px;=
+ line-height: 24px; color: #000000; mso-line-height-rule: exactly;padding:1=
+6px 32px;background-color:#ffffff;word-wrap:break-word;word-break:break-wor=
+d" class=3D"commonClass">
+            Dear Calvin,<br><br>Thank you very much for choosing to book wi=
+th us! We are delighted to let you know that our experienced team is dedica=
+ted to ensuring you enjoy a truly unforgettable tour experience.<br><br>Upo=
+n your arrival, our representative will be greeting you at the cruise port =
+and will be easily identifiable by a sign reading =E2=80=9CJ A T.=E2=80=9D =
+As your tour date approaches, we will provide you with the exact pickup tim=
+e and  additional details.<br><br>Should you have any questions or require =
+assistance, please do not hesitate to contact us<br><br>Best regards,<br>Ru=
+slan<br><br>
+           =20
+        </td>
+    </tr>
+    <tr>
+        <td align=3D"center" style=3D"padding:16px 0 8px;">
+            <a href=3D"mailto:NOT-9f18e71e-e1a2-4950-ae41-8a1897be3046@expm=
+essaging.tripadvisor.com?subject=3DResponding+about+my+Viator+booking" styl=
+e=3D"text-decoration:none;">
+                <button class=3D"replyButton" style=3D"background-color: #0=
+08768; line-height: 18px; color: #FFFFFF; cursor: pointer; height: 60px; bo=
+rder: 2px solid #008768; width: 251px; font-family: Helvetica, Arial, sans-=
+serif; font-size: 24px; font-weight: bold;">
+                    Reply
+                </button>
+            </a>
+        </td>
+    </tr>
+</tbody></table>
+
+  <table>
+   =20
+      <tbody><tr>
+          <td style=3D"width: 100%;" align=3D"center" valign=3D"top">
+              <p><a href=3D"https://track.pstmrk.it/3s/www.viator.com%2Faut=
+o-login%2FBD64C785ECDABBE4FF6FEEBCE630015D-FFEA71C5F9B343E61FF47BC172A779D6=
+45E10663823D1DD7AD950CB8C8DE93BA21E034319E953B2D5F69F87857446AB117EE4FFAE30=
+8394CA89E59DB4138814772DCC8C829952DC46F6F18314BBE43A7A5DA7EF39FDA75A4A5FD41=
+B6E18DD5FB510C2F2D1877E598160BC18347265C601827231C3449843C10A24229CDE17CBA7=
+DD3800BE4066143CCD47E7DBD9BE566B6ECD62DEF4D39689B1A44C620FD113E0E60BCAD3029=
+2E28B934DDF3E64D5B74%3Fdlim%3D953%26m%3D58827%26deeplink%3DCONTACT_OPERATOR=
+/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/2/HXb6AKDih_" class=3D=
+"conversation-link" align=3D"center" valign=3D"top" target=3D"_blank" style=
+=3D"font-weight: 700; font-size: 10px; color: #008768; text-decoration: non=
+e;"><span style=3D"text-decoration:none;font-family: Helvetica, Arial, sans=
+-serif;font-size: 18px; line-height: 24px;color:#008768;mso-line-height-rul=
+e:exactly; padding-top: 8px; padding-bottom: 16px;">View conversation in Bo=
+oking Details</span></a></p>
+          </td>
+      </tr>
+   =20
+  </tbody></table>
+
+<table align=3D"center" width=3D"550" style=3D"padding:16px 0 8px" bgcolor=3D=
+"#ffffff">
+    <tbody><tr>
+        <td align=3D"left" style=3D"padding-bottom: 8px;">
+            <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D=
+"100%">
+                <tbody>
+                <tr>
+                    <td align=3D"left" style=3D"font-family: Helvetica, Ari=
+al, sans-serif;font-size: 18px; line-height: 24px;mso-line-height-rule:exac=
+tly;">
+                       =20
+                       =20
+                          <a href=3D"https://track.pstmrk.it/3s/www.viator.=
+com%2Ftours%2Fx%2Fx%2Fd0-7692P124%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-=
+4344-a679-2437bf3d311b/3/7B19XMVDKz" target=3D"_blank" alias=3D"ProductName=
+" style=3D"text-decoration:none;">
+                              <span style=3D"color:#000000;">Best Olympia T=
+our for Cruise Passengers from Katakolon Port</span>
+                          </a>
+                       =20
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align=3D"left" style=3D"padding-bottom: 8px;">
+            <table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D=
+"100%">
+                <tbody>
+                <tr>
+                    <td align=3D"left" style=3D"font-family: Helvetica, Ari=
+al, sans-serif;font-size: 18px; line-height: 24px;mso-line-height-rule:exac=
+tly;">
+                       =20
+                       =20
+                          <a href=3D"https://track.pstmrk.it/3s/www.viator.=
+com%2Ftours%2Fx%2Fx%2Fd0-7692P124%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-=
+4344-a679-2437bf3d311b/3/7B19XMVDKz" target=3D"_blank" alias=3D"ProductTour=
+Grade" style=3D"text-decoration:none;">
+                              <span style=3D"color:#808080;">Best Olympia T=
+our for Cruise Passengers from Katakolon Port 07:30</span>
+                          </a>
+                       =20
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align=3D"center" valign=3D"top">
+            <table width=3D"100%" border=3D"0" cellspacing=3D"0" cellpaddin=
+g=3D"0" style=3D"border-collapse:separate;">
+                <tbody>
+                <tr>
+                    <td valign=3D"top">
+                        <table width=3D"251" height=3D"167" valign=3D"top" =
+border=3D"0" cellspacing=3D"0" cellpadding=3D"0" style=3D"width:251px;heigh=
+t:167px;border-collapse:separate;">
+                            <tbody>
+                            <tr>
+                                <td>
+                                   =20
+                                   =20
+                                      <a href=3D"https://track.pstmrk.it/3s=
+/www.viator.com%2Ftours%2Fx%2Fx%2Fd0-7692P124%3Fm%3D58827/0bVB/W4HFAQ/AQ/aa=
+a08841-60b2-4344-a679-2437bf3d311b/3/7B19XMVDKz">
+                                          <img src=3D"https://media-cdn.tri=
+padvisor.com/media/attractions-splice-spp-360x240/r/32/d7/af/9e/caption.jpg=
+" border=3D"0" width=3D"251" height=3D"167" style=3D"width:251px;height:167=
+px;display:block;" alt=3D"">
+                                      </a>
+                                   =20
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td valign=3D"top" align=3D"left" style=3D"padding:0 0 =
+0 16px;">
+                        <table border=3D"0" width=3D"100%" cellspacing=3D"0=
+" cellpadding=3D"0" style=3D"border-collapse:separate;">
+                            <tbody>
+                            <tr>
+                                <td height=3D"167" valign=3D"top" align=3D"=
+left" style=3D"height:167px">
+                                    <table valign=3D"top" border=3D"0" cell=
+spacing=3D"0" cellpadding=3D"0" style=3D"border-collapse:separate;">
+                                        <tbody>
+                                        <tr>
+                                            <td style=3D"font-family: Helve=
+tica, Arial, sans-serif; font-size: 18px; line-height: 24px; padding:0 0 0;=
+" align=3D"left">
+                                             =20
+                                             =20
+                                               =20
+                                                  <a href=3D"https://track.=
+pstmrk.it/3s/www.viator.com%2Fauto-login%2FBD64C785ECDABBE4FF6FEEBCE630015D=
+-FFEA71C5F9B343E61FF47BC172A779D645E10663823D1DD7AD950CB8C8DE93BA21E034319E=
+953B2D5F69F87857446AB117EE4FFAE308394CA89E59DB4138814772DCC8C829952DC46F6F1=
+8314BBE43A7A5DA7EF39FDA75A4A5FD41B6E18DD5FB510C2F2D1877E598160BC18347265C60=
+1827231C3449843C10A24229CDE17CBA7DD3800BE4066143CCD47E7DBD9BE566B6ECD62DEF4=
+D39689B1A44C620FD113E0E60BCAD30292E28B934DDF3E64D5B74%3Fdlim%3D953%26m%3D58=
+827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/4/pCg-ngbj46" targe=
+t=3D"_blank" style=3D"text-decoration:none;" alias=3D"PropertyBoxContentAli=
+as">
+                                                      <span style=3D"color:=
+#808080">Booking Reference:</span>
+                                                  </a>
+                                               =20
+                                               =20
+                                             =20
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=3D"font-family: Helve=
+tica, Arial, sans-serif; color:#808080; font-size: 18px; line-height: 24px;=
+ padding:6px 0 0;" align=3D"left">
+                                             =20
+                                             =20
+                                               =20
+                                                <a href=3D"https://track.ps=
+tmrk.it/3s/www.viator.com%2Fauto-login%2FBD64C785ECDABBE4FF6FEEBCE630015D-F=
+FEA71C5F9B343E61FF47BC172A779D645E10663823D1DD7AD950CB8C8DE93BA21E034319E95=
+3B2D5F69F87857446AB117EE4FFAE308394CA89E59DB4138814772DCC8C829952DC46F6F183=
+14BBE43A7A5DA7EF39FDA75A4A5FD41B6E18DD5FB510C2F2D1877E598160BC18347265C6018=
+27231C3449843C10A24229CDE17CBA7DD3800BE4066143CCD47E7DBD9BE566B6ECD62DEF4D3=
+9689B1A44C620FD113E0E60BCAD30292E28B934DDF3E64D5B74%3Fdlim%3D953%26m%3D5882=
+7/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/4/pCg-ngbj46" target=3D=
+"_blank" style=3D"text-decoration:none;color:#808080;" alias=3D"PropertyBox=
+ContentAlias">
+                                                    <span style=3D"color:#0=
+08768; text-decoration:none;">BR-1399735385</span>
+                                                </a>
+                                               =20
+                                               =20
+                                             =20
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=3D"font-family: Helve=
+tica, Arial, sans-serif; color:#808080; font-size: 18px; line-height: 24px;=
+ padding:6px 0 0;" align=3D"left">
+                                             =20
+                                             =20
+                                                <a href=3D"https://track.ps=
+tmrk.it/3s/www.viator.com%2Fauto-login%2FBD64C785ECDABBE4FF6FEEBCE630015D-F=
+FEA71C5F9B343E61FF47BC172A779D645E10663823D1DD7AD950CB8C8DE93BA21E034319E95=
+3B2D5F69F87857446AB117EE4FFAE308394CA89E59DB4138814772DCC8C829952DC46F6F183=
+14BBE43A7A5DA7EF39FDA75A4A5FD41B6E18DD5FB510C2F2D1877E598160BC18347265C6018=
+27231C3449843C10A24229CDE17CBA7DD3800BE4066143CCD47E7DBD9BE566B6ECD62DEF4D3=
+9689B1A44C620FD113E0E60BCAD30292E28B934DDF3E64D5B74%3Fdlim%3D953%26m%3D5882=
+7/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/4/pCg-ngbj46" target=3D=
+"_blank" style=3D"text-decoration:none;color:#808080;" alias=3D"PropertyBox=
+ContentAlias">
+                                                    <img src=3D"https://cdn=
+.tripadvisor.com/img2/email/vr/clockiconthin.png" border=3D"0" width=3D"18"=
+ height=3D"18" style=3D"width:18px;height:18px;display:inline-block;vertica=
+l-align:middle;">&nbsp;&nbsp;<span style=3D"color:#808080">Mon Jul 20, 2026=
+</span>
+                                                </a>
+                                             =20
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=3D"font-family: Helve=
+tica, Arial, sans-serif; color:#808080; font-size: 18px; line-height: 24px;=
+ padding:6px 0 0;" align=3D"left">
+                                             =20
+                                             =20
+                                                <a href=3D"https://track.ps=
+tmrk.it/3s/www.viator.com%2Fauto-login%2FBD64C785ECDABBE4FF6FEEBCE630015D-F=
+FEA71C5F9B343E61FF47BC172A779D645E10663823D1DD7AD950CB8C8DE93BA21E034319E95=
+3B2D5F69F87857446AB117EE4FFAE308394CA89E59DB4138814772DCC8C829952DC46F6F183=
+14BBE43A7A5DA7EF39FDA75A4A5FD41B6E18DD5FB510C2F2D1877E598160BC18347265C6018=
+27231C3449843C10A24229CDE17CBA7DD3800BE4066143CCD47E7DBD9BE566B6ECD62DEF4D3=
+9689B1A44C620FD113E0E60BCAD30292E28B934DDF3E64D5B74%3Fdlim%3D953%26m%3D5882=
+7/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/4/pCg-ngbj46" target=3D=
+"_blank" style=3D"text-decoration:none;color:#808080;" alias=3D"PropertyBox=
+ContentAlias">
+                                                    <span style=3D"color:#8=
+08080">Tickets and Tours</span>
+                                                </a>
+                                             =20
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align=3D"center" valign=3D"top" style=3D"font-family: Helvetica=
+, Arial, sans-serif;font-size: 18px; line-height: 24px;color:#000000;mso-li=
+ne-height-rule:exactly; padding-top: 0px; padding-bottom: 0px;">
+            <table width=3D"550" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" bgcolor=3D"#ffffff" style=3D"border-collapse: separate;">
+                <tbody>
+                <tr>
+                    <td height=3D"1" style=3D"width: 502px; border-bottom: =
+1px solid #B0B2B5;">
+                        &nbsp;
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+</tbody></table>
+            </div>
+
+        </td>
+    </tr>
+   =20
+    <tr>
+        <td align=3D"center" valign=3D"top" style=3D"font-family: Helvetica=
+, Arial, sans-serif;font-size: 18px; line-height: 24px;color:#000000;mso-li=
+ne-height-rule:exactly; padding-top: 0px; padding-bottom: 0px;">
+            <table width=3D"555" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" bgcolor=3D"#ffffff" style=3D"border-collapse: separate;">
+                <tbody><tr>
+                    <td style=3D"padding-bottom: 8px;">
+                        <table border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0">
+                            <tbody><tr>
+                                <td valign=3D"top" align=3D"center" width=3D=
+"272" style=3D"width: 272px">
+                                    <a href=3D"https://track.pstmrk.it/3s/m=
+y-viator.onelink.me%2Fx6GV%3Fpid%3DEmail%26c%3DCRM%2520Download%2520Banner%=
+2520Android%26mcid%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d3=
+11b/5/ZyZJuACNg0" target=3D"_blank">
+                                        <img src=3D"https://static.crm.tacd=
+n.com/30a3a6c3113728401eb279d0488e6e7d2cf2561d.png" alt=3D"Manage your book=
+ings on the app" width=3D"272" height=3D"299" style=3D"border: 0; display: =
+block; height: 299px; width: 272px">
+                                    </a>
+                                </td>
+                                <td align=3D"center" valign=3D"middle">
+                                    <table border=3D"0" cellspacing=3D"0" c=
+ellpadding=3D"0" width=3D"250" style=3D"width: 250px">
+                                        <tbody><tr>
+                                            <td align=3D"left">
+                                                <table align=3D"left" borde=
+r=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"250" style=3D"width: 2=
+50px">
+                                                    <tbody><tr>
+                                                        <td align=3D"left" =
+class=3D"appHeading" style=3D"padding: 16px 24px 8px 0; font-family: Helvet=
+ica, Arial, sans-serif; font-size: 24px; line-height: 28px; mso-line-height=
+-rule: exactly; font-weight: bold; color: #2A2D32; max-width: 250px; word-w=
+rap: break-word; white-space: normal;">
+                                                            Manage your boo=
+kings on the app
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align=3D"left" =
+class=3D"appHeadingContent" style=3D"padding: 0 24px 8px 0; font-family: He=
+lvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; mso-line-he=
+ight-rule: exactly; color: #2A2D32; max-width: 260px; word-wrap: break-word=
+; white-space: normal;">
+                                                            Make updates to=
+ your bookings, browse for more things to do, and even get directions to yo=
+ur activities.
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style=3D"padding: 16px 0 16=
+px 0;">
+                                                <table border=3D"0" cellspa=
+cing=3D"0" cellpadding=3D"0">
+                                                    <tbody><tr>
+                                                        <td align=3D"left" =
+style=3D"padding-right: 24px;">
+                                                            <a href=3D"http=
+s://track.pstmrk.it/3s/my-viator.onelink.me%2Fx6GV%3Fpid%3DEmail%26c%3DCRM%=
+2520Download%2520Banner%2520Android%26mcid%3D58827/0bVB/W4HFAQ/AQ/aaa08841-=
+60b2-4344-a679-2437bf3d311b/5/ZyZJuACNg0" target=3D"_blank">
+                                                                <img src=3D=
+"https://static.crm.tacdn.com/0925869960b33da629de17f859e4b1f84aaf200c.png"=
+ alt=3D"Google play image" width=3D"110" height=3D"32" style=3D"border: 0; =
+display: block; height: 32px; width: 110px">
+                                                            </a>
+                                                        </td>
+                                                        <td align=3D"left" =
+style=3D"padding-right: 24px;">
+                                                            <a href=3D"http=
+s://track.pstmrk.it/3s/my-viator.onelink.me%2Fx6GV%3Fpid%3DEmail%26c%3DCRM%=
+2520Download%2520Banner%2520Apple%26mcid%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60=
+b2-4344-a679-2437bf3d311b/6/Qt9GH3IvSp" target=3D"_blank">
+                                                                <img src=3D=
+"https://static.crm.tacdn.com/7138de0d332307843a10fd9dd1e11463968f802c.png"=
+ alt=3D"App store image" width=3D"110" height=3D"32" style=3D"border: 0; di=
+splay: block; height: 32px; width: 110px">
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+   =20
+    <tr>
+        <td align=3D"center" valign=3D"top" class=3D"learnContentTd" style=3D=
+"font-family: Helvetica, Arial, sans-serif; font-size: 18px; line-height: 2=
+4px; color: #000000; mso-line-height-rule: exactly; padding-top: 0; padding=
+-bottom: 0;">
+            <table width=3D"555" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" bgcolor=3D"#ffffff" style=3D"width: 555px; border-collapse: separate=
+;">
+                <tbody><tr>
+                    <td align=3D"center" width=3D"100%" style=3D"padding:24=
+px 0 16px">
+                </td></tr><tr>
+                    <td align=3D"center" style=3D"padding: 10px;">
+                        <table width=3D"100%" border=3D"0" cellspacing=3D"0=
+" cellpadding=3D"0" style=3D"width: 100%;">
+                            <tbody><tr>
+                                <td align=3D"center" class=3D"learnContent"=
+ style=3D"font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-=
+height: 150%; background-color: #FCF9E8; padding: 4px 21px 5px 17px; color:=
+ #808080;">
+                                    <a href=3D"https://track.pstmrk.it/3s/w=
+ww.viator.com%2Fhelp%2Farticles%2F81%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60=
+b2-4344-a679-2437bf3d311b/7/Nx_zb6-2l6" target=3D"_blank" style=3D"text-dec=
+oration: none;">
+                                        <span style=3D"color:#2A2D32;">We'r=
+e doing our best to help keep you safe and your plans flexible. </span></a>=
+<a href=3D"https://track.pstmrk.it/3s/www.viator.com%2Fhelp%2Farticles%2F81=
+%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/7/Nx_zb6-2=
+l6" target=3D"_blank" alias=3D"Covid19BannerLink" style=3D"text-decoration:=
+none;" color:=3D"" #0000ee;=3D""><b>Learn more</b></a>=20
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody></table>
+<table border=3D"0" cellspacing=3D"0" cellpadding=3D"0" width=3D"100%" styl=
+e=3D"background-color: #f5f5f5;">
+    <tbody><tr>
+        <td align=3D"center" valign=3D"top" style=3D"padding-top: 0px; padd=
+ing-bottom: 0px;">
+            <table width=3D"555" border=3D"0" cellspacing=3D"0" cellpadding=
+=3D"0" style=3D"background-color: #ffffff;border-collapse:separate;width:55=
+5px;">
+                <tbody><tr>
+                    <td align=3D"left" height=3D"32" class=3D"contentHeadin=
+g2" style=3D"background-color: #FFFFFF; line-height: 32px; height: 32px; fo=
+nt-size: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; mso-line-height-r=
+ule: exactly; border-collapse: separate;">
+                        &nbsp;
+                    </td>
+                </tr>
+                <tr>
+                    <td align=3D"center" valign=3D"top" style=3D"padding:0 =
+16px;background-color: #f5f5f5;">
+                        <table border=3D"0" cellspacing=3D"0" cellpadding=3D=
+"0" width=3D"100%" style=3D"border-collapse:separate;">
+                            <tbody><tr>
+                                <td valign=3D"top" align=3D"center" style=3D=
+"padding:32px 0;">
+                                    <table border=3D"0" cellspacing=3D"0" c=
+ellpadding=3D"0" width=3D"100%" style=3D"border-collapse:separate;">
+                                        <tbody><tr>
+                                            <td valign=3D"middle" align=3D"=
+left" width=3D"251" class=3D"contentHeading" style=3D"width: 251px; font-fa=
+mily: Helvetica, Arial, sans-serif; font-size: 14px; line-height: 15px; col=
+or: #808080;">
+                                                <a href=3D"https://track.ps=
+tmrk.it/3s/www.viator.com%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a67=
+9-2437bf3d311b/1/62HtxfaxnF" target=3D"_blank" alias=3D"HomeLink" style=3D"=
+color:#000000;text-decoration:none;">
+                                                    <img src=3D"https://sta=
+tic.crm.tacdn.com/vt/co/viatorlogofooterv2.png" height=3D"28" border=3D"0" =
+style=3D"border: 0; display:block;height:28px;" alt=3D"Viator, a Tripadviso=
+r Company ">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height=3D"1" style=3D"background-color:=
+ #B3B3B3;height: 1px;line-height: 1px;font-size:0px;mso-table-lspace:0pt;ms=
+o-table-rspace:0pt;mso-line-height-rule:exactly;border-collapse:separate;">
+                                    &nbsp;
+                                </td>
+                            </tr>
+                            <tr>
+                                <td valign=3D"top" style=3D"padding:24px 0 =
+32px;">
+                                    <table border=3D"0" cellspacing=3D"0" c=
+ellpadding=3D"0" width=3D"100%" style=3D"border-collapse:separate;">
+                                        <tbody><tr>
+                                            <td valign=3D"top" align=3D"lef=
+t" width=3D"251" style=3D"width: 251px;">
+                                                <table border=3D"0" cellspa=
+cing=3D"0" cellpadding=3D"0" align=3D"left" style=3D"border-collapse:separa=
+te;">
+                                                    <tbody><tr>
+                                                        <td align=3D"left" =
+class=3D"bottomContent" style=3D"font-family: Helvetica, Arial, sans-serif;=
+ padding-bottom: 24px;">
+                                                            <a href=3D"http=
+s://track.pstmrk.it/3s/www.viator.com%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-6=
+0b2-4344-a679-2437bf3d311b/1/62HtxfaxnF" target=3D"_blank" alias=3D"HomeLin=
+k" style=3D"text-decoration:none;color:#008768;">
+                                                                Go to Viato=
+r
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align=3D"left" =
+class=3D"bottomContent" style=3D"font-family: Helvetica, Arial, sans-serif;=
+ padding-bottom: 24px;">
+                                                            <a href=3D"http=
+s://track.pstmrk.it/3s/www.viator.com%2Fsupport%2FprivacyPolicy%3Fm%3D58827=
+/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/8/RsIGadIkEl" target=3D=
+"_blank" alias=3D"PrivacyLink" style=3D"color:#008768;text-decoration:none;=
+">
+                                                                Privacy Pol=
+icy
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align=3D"left" =
+class=3D"bottomContent" style=3D"font-family: Helvetica, Arial, sans-serif;=
+ padding-bottom: 24px;">
+                                                            <a href=3D"http=
+s://track.pstmrk.it/3s/www.viator.com%2Fsupport%2FtermsAndConditions%3Fm%3D=
+58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a679-2437bf3d311b/9/BMEBMUkrYe" tar=
+get=3D"_blank" alias=3D"TermsConditionsLink" style=3D"color:#008768;text-de=
+coration:none;">
+                                                                Terms of Us=
+e
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                            </td>
+                                            <td width=3D"16" style=3D"width=
+:16px;"></td>
+                                            <td valign=3D"top" align=3D"lef=
+t" width=3D"251" style=3D"width: 251px;">
+                                                <table border=3D"0" cellspa=
+cing=3D"0" cellpadding=3D"0" align=3D"right" style=3D"border-collapse:separ=
+ate;">
+                                                    <tbody><tr>
+                                                        <td style=3D"paddin=
+g-bottom: 16px; font-family: Helvetica, Arial, sans-serif; font-size: 14px;=
+ line-height: 15px; color: #808080; mso-line-height-rule: exactly; text-ali=
+gn: left;" class=3D"bottomRightContent">
+                                                            Please do not r=
+eply directly to this email. This was sent from an address that cannot acce=
+pt responses. For questions or assistance, <a href=3D"https://track.pstmrk.=
+it/3s/www.viator.com%2Ffaq%3Fm%3D58827/0bVB/W4HFAQ/AQ/aaa08841-60b2-4344-a6=
+79-2437bf3d311b/10/Yaey8AXkh5" target=3D"_blank" alias=3D"FOOTERHELPCENTERL=
+INK" style=3D"text-decoration:none; color: #0000EE;">visit our Help Center<=
+/a>.
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class=3D"bottom=
+RightContent" style=3D"font-family: Helvetica, Arial, sans-serif; font-size=
+: 14px; line-height: 15px; color: #808080; mso-line-height-rule: exactly; t=
+ext-align: left;">
+                                                            =C2=A9 2024 Via=
+tor, Inc. All rights reserved.
+                                                        </td>
+                                                    </tr>
+                                                </tbody></table>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </td>
+                </tr>
+            </tbody></table>
+        </td>
+    </tr>
+</tbody></table>
+
+
+
+
+<img src=3D"https://ea.pstmrk.it/open?m=3Dv3_1.jOXkzYNWR9zD6SbS-8VPIQ.ji-eD=
+P2jDtFF3oif94QqtOkf0MjB0z0jFGNOGQjzqXDoeDJZ7g2T5n9ZmQrKSPD_BWuFJjMlpaRB-NVP=
+zw321Vay6UdZOF47RV6nXXqcJfXIl0I1QbRLOgqWggdNznQHb3W2up0rp0UebZNqxhp5K5JpZDT=
+Crxu3Gb7jaqmFTTzxnDJsN6Xhgv94SdI1f8DBxQRznotIQi8zkNzSC6NuMScrFlVmBagLtGmdjD=
+86xVfEHrWMYRlSKpM5fdpaM3x1bTn7Z4IOfECDe7TYgUPMcAtmNrTEjTX8WYnlq_HPzsCSCYqFd=
+WkwyVgbcWuQknHINqbgHqliIzW7fUnoo7ryIsq6MZBfRV2A22Mv5euGxttyNKZhM3SF6XZ9ELGB=
+D50LwNt9IOBV3YyCdHrUCFytTGBkGY1OGwt2-Pl3NxobeUAJ6a6_i0fFCxYmUk6R4oYQL1iXLGC=
+Oge-WYpduNzNsGQ96KUdiutMq8hR4TJEKdr_7WL6sl0C5gBy9qVxcFN7i5UUq-er5XUWeMELbyV=
+laGawHEBSD_h_RD6Gfa5FX9Vd1ZlzMnNW8_IbMUo3n19KioMuYIg76vBPFAztdyFKC5oVtNBbEJ=
+8rTQtjtZl5AeMKxxpwA-ODDvTBwt0duxSxtdGExExwkkK8WOCq6t5bihw06V9e1z-gIIjf5w3Ve=
+A7Ag031lotqe01rqvXqyX--jVm2ifQoDNV7qKuakPjW61y-oka9wucacVUT1vw6DDkSUTDzvyvt=
+00qcsrXyGHkSx6bXCFrhreiOlB1bzG0qFyAl2UVDhWJg7kCTkC63M5GmnAPDTcbEPhTglgmxlZM=
+IukQPtIlny83NG0efi-KTkGwaxpNFMos6YOGmxJZgZyFVWC4xr9f2qgaQvOtzwsUXBk16JT0utB=
+HBTO33q7891mxU0qx0rztCF4ptJLyRNmcCB7qX3TNDWK3KM0_v4Qi84xfcS2WOOHdld50n5TsYT=
+Lw" width=3D"1" height=3D"1" border=3D"0" alt=3D"" /></body></html>
+
+--mk3-fe50de3342f54ca584c3c05d9ca8af40--

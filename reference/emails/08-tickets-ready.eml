@@ -1,0 +1,436 @@
+Delivered-To: calvinbagley@gmail.com
+Received: by 2002:a05:7412:4e22:b0:1d7:9a57:171c with SMTP id gb34csp2003997rdb;
+        Wed, 20 May 2026 07:07:07 -0700 (PDT)
+X-Received: by 2002:a17:90b:2742:b0:368:cefe:ddd0 with SMTP id 98e67ed59e1d1-36951b82f8fmr24820158a91.15.1779286027189;
+        Wed, 20 May 2026 07:07:07 -0700 (PDT)
+ARC-Seal: i=2; a=rsa-sha256; t=1779286027; cv=pass;
+        d=google.com; s=arc-20240605;
+        b=fXVxPIt/Ana/zNeipyhiC7wh0S+VAW7g4K5L+Y1XbPZTpBG8NHGyvxaPqy5Kfnnd51
+         HKqv5+Ht8MAKQSCYsuuX1wTolLzM3eRvvA4h1IZeCcS0F8TmxCEk/i2dQEVCefaoFHng
+         KNEEwbn4gd3p/8xCSTcXG3t9kCBWRrtW+RLVSAOdqkMnPsFYbzZG7YRxEN/H9zV3p6uU
+         0zqJIAkAByROykeCnARcvwNs+TSj7o7YNtCzwViW0BmYQOVdV6+4kXHsYxYYVRyfEiEY
+         6Eb26niUBSGeql9Q5WEd5UbHF6e7MTYcoGr79axiBkIY9AtND9zhXooXYlTk6XlgcQMe
+         X6/g==
+ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:content-language:accept-language:message-id:date
+         :thread-index:thread-topic:subject:to:from;
+        bh=8GU2iWwKBRdUbJoEu/cWv1EfeisysuX2NmMHFHpiUKc=;
+        fh=di0ppUPVF5634edQ+3gIhpiDbaISnlKcV5LMizr4LPI=;
+        b=OgURslhvt0KKmkJyOxchAZEkWEuTAAM1boRNM59GK0mWgyNDYL1aTe2mjElYcn1dYS
+         dwt6Lmhku/9OGRCBXXYK3j3ohzHcyXkOGJszVijZux95ewEDxKntlxL7deTdWgZ4J5S9
+         EMF2/eA1OnHDWiaPRUBQSN0/qatFPkvP9PnVjnAcps7d0HVS7s7i1nr3VQxMKcpDpRSo
+         M4PbQO4mK1Ca3M4aQoqJEXhmxJcp3M0G79uBXOpFGHr9RU6VOja5zX0DlDUMSWOsySHj
+         LO3ZWyxPM6asssTWvoBvHuUiMy1+2EBbkBXlLF74rcdvojdxoqj994HXrhqyAMy+kKwn
+         S9qA==;
+        dara=google.com
+ARC-Authentication-Results: i=2; mx.google.com;
+       arc=pass (i=1 spf=pass spfdomain=santorinicablecar.gr dkim=pass dkdomain=santorinicablecar.gr dmarc=pass fromdomain=santorinicablecar.gr);
+       spf=pass (google.com: domain of noreply@santorinicablecar.gr designates 2a01:111:f403:c207::3 as permitted sender) smtp.mailfrom=noreply@santorinicablecar.gr;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=santorinicablecar.gr
+Return-Path: <noreply@santorinicablecar.gr>
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazlp170110003.outbound.protection.outlook.com. [2a01:111:f403:c207::3])
+        by mx.google.com with ESMTPS id 98e67ed59e1d1-36951870b67si30665045a91.13.2026.05.20.07.07.06
+        for <calvinbagley@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 May 2026 07:07:06 -0700 (PDT)
+Received-SPF: pass (google.com: domain of noreply@santorinicablecar.gr designates 2a01:111:f403:c207::3 as permitted sender) client-ip=2a01:111:f403:c207::3;
+Authentication-Results: mx.google.com;
+       arc=pass (i=1 spf=pass spfdomain=santorinicablecar.gr dkim=pass dkdomain=santorinicablecar.gr dmarc=pass fromdomain=santorinicablecar.gr);
+       spf=pass (google.com: domain of noreply@santorinicablecar.gr designates 2a01:111:f403:c207::3 as permitted sender) smtp.mailfrom=noreply@santorinicablecar.gr;
+       dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=santorinicablecar.gr
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=j4eG+hX9J7n4tAD8/+Mekwro1RMiIkEzZiwIqZ7uF6c42uj+MzYD7qPF/DpP3FAC1kcSBtgRnOpttkynwzilxQv90IA+4DCSJc2M+irNuS+Y3cDAno4n1C4ZNJ6Sy7rvY5XLdkf3atAE2SaRffHmbimYUiInM+I6W4pe7STb6qEcxR+XvP58RTErqpWOF/WtbfOG6NvF5lsbZmRFHvjtR/tZkzx/0g+t5eP8ox+AP/b43CX9sP5bU9yLT2AwqZYoSSmTk6bvoa2S73U8cfwYzMSGFpH76WvMDIdXX9nE6quNU5E9ax5dbCd05vbQJig5gkLVv4+evwUCSbBx5TNiog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8GU2iWwKBRdUbJoEu/cWv1EfeisysuX2NmMHFHpiUKc=;
+ b=D7KjeQrq05pWG06mQB1Uc5ebg8+yaj5mtoYgdpqAPmfDEqpmmKqXOEa0l+/vk2t0DpXs/4a4r7ZS/CJ9H7bQYwSnY4dcTG6AvBxOZKqhfKvXiENawJUInK9JlPW2tspxet9J67WlObmdC7Go2Py+/0e5bJMom39upERIGq184SOKsTwJXk7AggHHc04jrt1JsucFXeTPNKUYryUGVbAFyYpklH8LBDr0t6SKQAV/6gGTpaOdgUJjJZyAfIRkZLfUdPF2WLsjDAqqW/0PHcHGEGZ+o1xtoZ8d0eJygVcO6c+TIyAhvJ4jv9NRVBPfpaiBbSt+jOAdxX9SP0F1T2LSTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=santorinicablecar.gr; dmarc=pass action=none
+ header.from=santorinicablecar.gr; dkim=pass header.d=santorinicablecar.gr;
+ arc=none
+Received: from VI1PR06MB5422.eurprd06.prod.outlook.com (2603:10a6:803:c2::24)
+ by DB9PR06MB11222.eurprd06.prod.outlook.com (2603:10a6:10:614::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.25.24; Wed, 20 May
+ 2026 14:06:56 +0000
+Received: from VI1PR06MB5422.eurprd06.prod.outlook.com
+ ([fe80::616f:69f6:e3d1:5085]) by VI1PR06MB5422.eurprd06.prod.outlook.com
+ ([fe80::616f:69f6:e3d1:5085%7]) with mapi id 15.21.0048.013; Wed, 20 May 2026
+ 14:06:55 +0000
+From: Santorini Cable Car <noreply@santorinicablecar.gr>
+To: "calvinbagley@gmail.com" <calvinbagley@gmail.com>
+Subject: Your tickets are ready!
+Thread-Topic: Your tickets are ready!
+Thread-Index: AQHc6GHqBesB1ApGikGsdp92EWdKOQ==
+Date: Wed, 20 May 2026 14:06:55 +0000
+Message-ID:
+ <VI1PR06MB5422BB39A93E82D53EB56281D0012@VI1PR06MB5422.eurprd06.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=santorinicablecar.gr;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VI1PR06MB5422:EE_|DB9PR06MB11222:EE_
+x-ms-office365-filtering-correlation-id: 4919f559-0b36-4a0c-5c51-08deb6790d01
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|366016|1800799024|38070700021|18002099003|56012099003|6143699003|8096899003;
+x-microsoft-antispam-message-info:
+ gcNeaJPTqgE7HxxU/vG6Xjyf4BFOF8QqrRjykTn0r2Z5xNOB9z86uMtZdwp+zk+Hf2oQcCd5B0aQ3xk/G77449/XElo4/1nkSDx4rLI2yWJMGJ/GRNBCMX3GTBWmQyc/b9bWCcB6DM7LsH5oJGI9q71Yi/2+PcxwEbVYzEoS6S7I2Kl8ZlaR88+8XuH1BeDqLIs/psd1tFTmw6lhEqmLB5BwuO0us/9jFx2gkOa4qA6FI/6CzFft/vuInRERccADrsC+tePSPdSvBElTVYoEVSjKojMqcz7bNUgZ7IMQWrHtBfF7ke3B2+Ri/sYq3NYAtPJQfgDoJNLexIvrAIoEHS67hq1rRYYtrIq5MFdEj7HgGjLo+fYhTIOl2CWioT/XAcTVyTt9rMdUykUl/DbK0IA6HFOiktm07b0MImRvAfPXw98RGp3bzwuj+290z1TkqRX7Y6p2X5gxrVgIAndduGrNhKoxr5UhReIpafgPIEvz/mmJapmfRPIGqcb3FxAQo0dpnz3mak55kONTu/PQMTAxkybU54/O/Qi2Hr6HYyoyjtLre1OtX6oUgsfxYxN1m8LtkjLYrcJ5A/etKtT1ipnFjM3tSGU90kmlojxttZBEF6z2Ry8s5MtLk52RcUfAKvax27xjFBpr4pzLDyCyWFLdgPaG0XyfySAuuOUmKAB1FsoY4O/Q+tJsjrtQODxng6tHtNJegmqsAFqJC+p49w==
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:VI1PR06MB5422.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(18002099003)(56012099003)(6143699003)(8096899003);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?+0A4YDzXa4zc9ffyOT0eTNm6CUKXgCgSLjmEj1gAuv/9cCdCmT3Pgm1B?=
+ =?Windows-1252?Q?Rzgk7hQ/MXfdjw++7fPmGm0muYvQxFWHyVo1Cmz1b1T6kI6ceSZk+/g8?=
+ =?Windows-1252?Q?NFbmAc6mVXPCDY4rGSh8NGP4REQ3Ulpjwvr/Af/9Vfd0lSrIkHIS7BK1?=
+ =?Windows-1252?Q?TeIqkGbbd2tciJrg2Mh2yXCU3cyJpi/rr6+EpYs+X8ptLEx4Ycfnv+Yo?=
+ =?Windows-1252?Q?dnEAxhWqJyk77mBOa7Vs2Ls1VkYUT4sP63CkZvRjOjLPepG6RfZkEI1J?=
+ =?Windows-1252?Q?ifVpiZJwhX+94ExjPkpZNU27BgWmCnRrML2kW4z6n7K4EwNAQo48Vcb8?=
+ =?Windows-1252?Q?rxtwtfvppPJXehaqfH8Rv/F65WQo053w+HM1khdYkf3vXG0il/y4gqb1?=
+ =?Windows-1252?Q?Mn6PXXd/w++Qb7ovmGiZ9iqtqQcDiUWyWrtIpgCdqi7LgUGZgCUIBIjH?=
+ =?Windows-1252?Q?LG33M/coZcRTeHdtPVadGfYT/PC1PFxlYNjRqpnvWbfJkayRZWd9GZe6?=
+ =?Windows-1252?Q?BWWhJqO/tqfEhYOihJ/NhSnRCGn0C38NReqgUFSXGUJYLX7fCr7hNApA?=
+ =?Windows-1252?Q?VuofQ8PNttfxEZSuZ2gyGhaNDvJrC0Wc4JENWvdeEDE0o7WTigg4MEQ3?=
+ =?Windows-1252?Q?5R9yKQVbbIQQtXNL+8DrhCfnyd52cRa+G7Y3BDf/Q2R3AKcYeTO7x7JA?=
+ =?Windows-1252?Q?Xay3FRLWnTUWz7uezcQb0z4nrWXY1M/bsbqYJY/8QemKBpn5AIq6qsCt?=
+ =?Windows-1252?Q?ERv5yvBrJtIuM8tMx8/+IaexYr1/IvBLEssnukEY6Oem03foKDVj3M+r?=
+ =?Windows-1252?Q?IaoIpqmFu1/e+huXCFNVW/IxuIRCoVVi0gNrqh7/z04fU6iP9JMTz3fd?=
+ =?Windows-1252?Q?6//vxynD44ycXRxjHSVrnzvmggkwm2ZvJ4D5HdXY5up4YE7oD5kflYSA?=
+ =?Windows-1252?Q?MQLdJ5AWwCbgmFuXnzTqNSpUHwe+qrYOGuvPGc16+SaNEPIzsEd4r7k8?=
+ =?Windows-1252?Q?Gth8INYpz0a5rdiRMAfTGGsZFtaFvdW7bheIDQUdSQ+41mUhtKdGspRR?=
+ =?Windows-1252?Q?9sj1heJ/bdMWmd6QTkFkOjEvrKqbYhg6UBP4ij5HpPcUfJ23wnvUhzE3?=
+ =?Windows-1252?Q?foO2koVCKRN2dGu78SmxWu34TVIkw9iVc98lOgNV56B8Qjg+LroQk4y2?=
+ =?Windows-1252?Q?QVthhdtPN12VrnVt4CI7I4Ynxr4wGSlxSI1AoIqsvWciKBaKtOaHEyu8?=
+ =?Windows-1252?Q?DE17FrbaKcY3oWGTay4KCxVljQIGjrMQephWbzi6BGl5JII/NdV0hJ3G?=
+ =?Windows-1252?Q?fT7J+rqd1oPOJwtZLWR+5uv9cObAfvbkdUahHYj0Z+AOFNWc4cExyTSG?=
+ =?Windows-1252?Q?9hw3an/qsQh0s5e2J5ko2IxBNjNtxYebpxBgzj8QDeRGef9YBtuz61Er?=
+ =?Windows-1252?Q?1Dr2Ft9+cmer3dRuHqV8f6IhcCXsuEbrw6fEwpAJvki1Und/qHx/RH6U?=
+ =?Windows-1252?Q?bfKJGE6fKW1jnrj8cu5mmEooigaC+S9K3SOnjqehsAgQStaZqttSyVVb?=
+ =?Windows-1252?Q?XjAyo1jfdMOifgHMawBt/szHY8cekOJ6vbEVQDIEQ1mIiSw0UoUNEo1Q?=
+ =?Windows-1252?Q?U3VinaxYjv8A4KPZYTfbmhuW08A4RoBU4dMto8/dFCnQ/7yYWtixdyB4?=
+ =?Windows-1252?Q?SG7K3S2BJK+kPvBf61pcJvYfC1sLeXAX/dd1RDoG/5FNaa0rn5eMr8m3?=
+ =?Windows-1252?Q?wwzCDSobkb3vBUmG4frcGNKRytF9Np9as8hGGI6esceGBvK4AhB0t/bR?=
+ =?Windows-1252?Q?n79LKexmPjG/nVgHGLDCoQzOckS1xDlOfVYAKkG29D8gbEPLnJZs17RD?=
+ =?Windows-1252?Q?MFUFCgZ+ZrBMBLqYDt80XPDE4Zb/UAdpDEw=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_VI1PR06MB5422BB39A93E82D53EB56281D0012VI1PR06MB5422eurp_"
+MIME-Version: 1.0
+X-OriginatorOrg: santorinicablecar.gr
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VI1PR06MB5422.eurprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4919f559-0b36-4a0c-5c51-08deb6790d01
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 May 2026 14:06:55.8613
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 4475c7d6-1d2e-44e0-8466-0592591d37fb
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: HDXYlhTAuUUN7lj9xWiZMFRajD0ZPaDe5o2PFyBZFRWn2/ABBRRTKKv4gNe0wsZfrnbvZ4xuXKoTUgFgYOeIsA65ptaGu75cXVYyfH9lbww=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR06MB11222
+
+--_000_VI1PR06MB5422BB39A93E82D53EB56281D0012VI1PR06MB5422eurp_
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+Hello,
+
+You have successfully booked your tickets. Here are your order's details:
+
+YOUR TICKETS
+Ticket
+Quantity
+Total
+Standard
+4
+40=80
+Total
+4
+40=80
+YOUR DETAILS
+Order Id
+019e45b0-5cdb-7cc6-985f-1847fec558a1
+Email address
+calvinbagley@gmail.com
+DOWNLOAD YOUR TICKETS <https://tickets.santorinicablecar.gr/en/orders/019e4=
+5b0-5cdb-7cc6-985f-1847fec558a1/tickets/file>
+
+--_000_VI1PR06MB5422BB39A93E82D53EB56281D0012VI1PR06MB5422eurp_
+Content-Type: text/html; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w=
+3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DWindows-1=
+252">
+</head>
+<body style=3D"margin: 0; padding: 0;">
+<table align=3D"center" class=3D"email container" style=3D"font-weight: 500=
+; max-width: 600px; margin: 0 auto; font-family: sans-serif;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<td style=3D"font-weight: 500;">
+<table class=3D"row" style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th class=3D"small-12 large-12 first last columns page" style=3D"font-weigh=
+t: 500; text-align: left; background-color: #ffffff; padding: 24px;">
+<table style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">
+<h1 style=3D"margin: 0; padding: 0;">Hello,</h1>
+<p style=3D"line-height: 1.6;">You have successfully booked your tickets. H=
+ere are your order's details:
+</p>
+<div class=3D"box" style=3D"background-color: #fafafa; border-radius: 16px;=
+ font-size: 14px; padding: 24px; text-align: left;">
+<h2 class=3D"info-table-title" title=3D"YOUR TICKETS" style=3D"margin: 0; p=
+adding: 0; font-size: 12px; color: #999999;">
+YOUR TICKETS </h2>
+<table align=3D"center" class=3D"info-table with-horizontal-headers contain=
+er" style=3D"margin: 0 auto; font-family: sans-serif; margin-top: 12px; bac=
+kground-color: #f3f3f3; padding: 0 12px; border-radius: 10px; width: 100%; =
+font-weight: 400;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<td style=3D"font-weight: 500;">
+<table class=3D"row" style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th class=3D"small-12 large-4 first columns" style=3D"font-weight: 500; pad=
+ding: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowra=
+p; min-width: 60px; padding-right: 16px;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: bold;">Ticket</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-4 columns" style=3D"font-weight: 500; padding: =
+12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap; tex=
+t-align: right; min-width: 60px; padding-right: 16px;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: bold;">Quantity</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-4 last columns" style=3D"font-weight: 500; padd=
+ing: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap=
+; text-align: right; min-width: 60px;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: bold;">Total</th>
+</tr>
+</tbody>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+<table class=3D"row" style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th class=3D"small-12 large-4 first columns" style=3D"font-weight: 500; pad=
+ding: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowra=
+p; min-width: 60px; padding-right: 16px; border-top: 1px dashed #dde0e5;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">Standard</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-4 columns" style=3D"font-weight: 500; padding: =
+12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap; tex=
+t-align: right; min-width: 60px; padding-right: 16px; border-top: 1px dashe=
+d #dde0e5;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">4</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-4 last columns" style=3D"font-weight: 500; padd=
+ing: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap=
+; text-align: right; min-width: 60px; border-top: 1px dashed #dde0e5;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">40=80</th>
+</tr>
+</tbody>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+<table class=3D"summary row" style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th class=3D"small-12 large-4 first columns" style=3D"font-weight: 500; pad=
+ding: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowra=
+p; min-width: 60px; padding-right: 16px; border-top: 2px dashed #cccccc;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">Total</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-4 columns" style=3D"font-weight: 500; padding: =
+12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap; tex=
+t-align: right; min-width: 60px; padding-right: 16px; border-top: 2px dashe=
+d #cccccc;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">4</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-4 last columns" style=3D"font-weight: 500; padd=
+ing: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap=
+; text-align: right; min-width: 60px; border-top: 2px dashed #cccccc;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">40=80</th>
+</tr>
+</tbody>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<h2 class=3D"info-table-title" title=3D"YOUR DETAILS" style=3D"margin: 0; p=
+adding: 0; font-size: 12px; color: #999999; margin-top: 24px;">
+YOUR DETAILS </h2>
+<table align=3D"center" class=3D"info-table with-vertical-headers container=
+" style=3D"margin: 0 auto; font-family: sans-serif; margin-top: 12px; backg=
+round-color: #f3f3f3; padding: 0 12px; border-radius: 10px; width: 100%; fo=
+nt-weight: 400;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<td style=3D"font-weight: 500;">
+<table class=3D"row" style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th class=3D"small-12 large-6 first columns" style=3D"font-weight: 500; pad=
+ding: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowra=
+p;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: bold;">Order Id</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-6 last columns" style=3D"font-weight: 500; padd=
+ing: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap=
+; text-align: right;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">019e45b0-5cdb-7cc6-985f-1847fec558a1</th>
+</tr>
+</tbody>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+<table class=3D"row" style=3D"font-weight: 500;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th class=3D"small-12 large-6 first columns" style=3D"font-weight: 500; pad=
+ding: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowra=
+p; border-top: 1px dashed #dde0e5;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: bold;">Email address</th>
+</tr>
+</tbody>
+</table>
+</th>
+<th class=3D"small-12 large-6 last columns" style=3D"font-weight: 500; padd=
+ing: 12px 0; width: 100%; border-spacing: 0; margin: 0; white-space: nowrap=
+; text-align: right; border-top: 1px dashed #dde0e5;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<th style=3D"font-weight: 500;">calvinbagley@gmail.com</th>
+</tr>
+</tbody>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class=3D"actions" style=3D"margin-top: 32px;">
+<table class=3D"button-tickets button" style=3D"font-weight: 500; text-alig=
+n: center; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<td style=3D"font-weight: 500;">
+<table style=3D"font-weight: 500; width: 100%;">
+<tbody>
+<tr style=3D"font-weight: 500;">
+<td style=3D"font-weight: 500;"><a href=3D"https://tickets.santorinicableca=
+r.gr/en/orders/019e45b0-5cdb-7cc6-985f-1847fec558a1/tickets/file" style=3D"=
+background-color: #1600a3; text-decoration: none; color: #ffffff; padding: =
+16px 24px; font-size: 12px; font-weight: bold; border-radius: 6px;">DOWNLOA=
+D
+ YOUR TICKETS </a></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</th>
+<th class=3D"expander" style=3D"font-weight: 500;"></th>
+</tr>
+</tbody>
+</table>
+</th>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
+
+--_000_VI1PR06MB5422BB39A93E82D53EB56281D0012VI1PR06MB5422eurp_--
