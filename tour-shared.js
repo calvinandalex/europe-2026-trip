@@ -69,6 +69,19 @@ function metaText(row) {
   return who + ' · ' + when;
 }
 
+function bookedTextForStop(name, ticket) {
+  if (kind === 'athens' && name === 'Acropolis Museum') return 'Order #880591';
+  if (kind === 'athens' && ticket === 'Acropolis ticket') return 'Timed entry 5:00 PM';
+  if (kind === 'venice' && name === 'Hotel Palazzo Priuli') return 'Booking #6231598372';
+  return '';
+}
+
+function preBookedBadge(text) {
+  return text
+    ? '<div class="stop-booking"><div class="prebooked"><span>✅ PRE-BOOKED</span><small>' + esc(text) + '</small></div></div>'
+    : '';
+}
+
 function renderStops() {
   const html = stops.map((stop, index) => {
     const name = stop[0];
@@ -81,10 +94,12 @@ function renderStops() {
     const tori = stopField(stop, 9, 7).replace(/^Tori: /, '');
     const ticket = stopField(stop, 10, 8) || 'Free stop';
     const id = idFor(index);
+    const booked = bookedTextForStop(name, ticket);
     return '<article class="stop-card" data-id="' + id + '">' +
       '<div class="stop-head"><div class="stop-num" style="background:' + colorFor(category) + '">' + (index + 1) + '</div>' +
       '<div><h2 class="stop-title">' + esc(name) + '</h2>' +
-      '<div class="stop-meta">⏱️ ' + esc(time) + ' · ' + esc(transport) + ' · ' + esc(ticket) + '</div></div></div>' +
+      '<div class="stop-meta">⏱️ ' + esc(time) + ' · ' + esc(transport) + ' · ' + esc(ticket) + '</div>' +
+      preBookedBadge(booked) + '</div></div>' +
       '<div class="stop-lines">' +
       '<p><span class="label">📸 What it is</span> ' + esc(what) + '</p>' +
       '<p><span class="label">🎯 Look for this</span> ' + esc(look) + '</p>' +

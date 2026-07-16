@@ -1,2 +1,273 @@
-const {supabaseUrl,supabaseAnon,days,packing,family}=window.TRIP_CONFIG;const TRIP='europe-2026';const store={items:{},packing:{},member:localStorage.getItem('europe2026_member')||'calvin',offline:JSON.parse(localStorage.getItem('europe2026_offline_queue')||'[]')};let client=null;const $=s=>document.querySelector(s);function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function activeMember(){return family.find(f=>f.id===store.member)||family[0]}function renderMembers(){const wrap=$('#memberPicker');wrap.innerHTML=family.map(f=>'<button class="member-btn '+(store.member===f.id?'active':'')+'" data-member="'+f.id+'">'+f.emoji+' '+f.name+'</button>').join('');wrap.addEventListener('click',e=>{const b=e.target.closest('[data-member]');if(!b)return;store.member=b.dataset.member;localStorage.setItem('europe2026_member',store.member);renderMembers()})}function dayCard(day){return '<article class="day-card day-'+day.cls+'"><div class="day-header"><span class="day-icon">'+day.icon+'</span> '+esc(day.date)+'<span class="day-subtitle">'+esc(day.title)+'</span></div>'+(day.link?'<a class="tour-open" href="'+day.link[1]+'">'+day.link[0]+'</a>':'')+(day.prep?'<div class="prep-box"><h4>🎒 Pack for Today</h4><ul>'+day.prep.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div>':'')+'<div class="checklist">'+day.items.map((it,i)=>{const id=day.n+'-'+(i+1);return '<div class="checklist-item" data-id="'+id+'"><div class="checkbox"></div><div class="item-content"><div class="item-time">'+esc(it[0])+'</div><div class="item-text">'+esc(it[1])+'</div><div class="item-details">'+esc(it[2])+'</div><div class="checked-meta" data-meta="'+id+'"></div></div></div>'}).join('')+'</div>'+(day.booking?'<div class="booking-info"><h4>📇 Booking Info</h4>'+day.booking.map(x=>'<p>'+esc(x)+'</p>').join('')+'</div>':'')+'</article>'}function renderDays(){const root=$('#dayCards');root.innerHTML=days.map(dayCard).join('');root.addEventListener('click',e=>{const item=e.target.closest('.checklist-item');if(item)toggleCloud(item.dataset.id)});paintCloud()}function packKey(person,item){return 'europe2026_pack_'+person+'_'+item.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'')}function renderPacking(){const root=$('#packingCards');root.innerHTML=packing.map(p=>'<article class="packing-person '+p.className+'" data-person="'+p.id+'"><div class="person-header"><span class="emoji">'+p.emoji+'</span><div class="person-info"><span class="person-name">'+esc(p.name)+'</span><div class="person-bar"><div class="person-fill" data-pack-fill="'+p.id+'"></div></div></div><div class="person-progress" data-pack-progress="'+p.id+'">0/0 packed</div></div>'+Object.entries(p.categories).map(([cat,items])=>'<div class="packing-category"><div class="category-title">'+esc(cat)+'</div>'+items.map(item=>'<div class="packing-item" data-key="'+packKey(p.id,item)+'" data-person="'+p.id+'"><div class="pack-checkbox"></div><div class="pack-text">'+esc(item)+'</div></div>').join('')+'</div>').join('')+'</article>').join('');root.addEventListener('click',e=>{const item=e.target.closest('.packing-item');if(!item)return;const key=item.dataset.key;const val=localStorage.getItem(key)!=='true';localStorage.setItem(key,String(val));paintPacking()});paintPacking()}function paintPacking(){document.querySelectorAll('.packing-item').forEach(el=>el.classList.toggle('completed',localStorage.getItem(el.dataset.key)==='true'));packing.forEach(p=>{const els=[...document.querySelectorAll('.packing-item[data-person="'+p.id+'"]')];const done=els.filter(e=>e.classList.contains('completed')).length;const total=els.length;const text=document.querySelector('[data-pack-progress="'+p.id+'"]');const fill=document.querySelector('[data-pack-fill="'+p.id+'"]');if(text)text.textContent=p.name+' '+done+'/'+total+' packed';if(fill)fill.style.width=total?(done/total*100)+'%':'0%'})}function allItineraryIds(){return days.flatMap(d=>d.items.map((_,i)=>d.n+'-'+(i+1)))}function paintCloud(){const total=allItineraryIds().length;let done=0;document.querySelectorAll('.checklist-item,.tour-check-row').forEach(el=>{const row=store.items[el.dataset.id];const completed=!!(row&&row.completed);el.classList.toggle('completed',completed);if(completed&&el.classList.contains('checklist-item'))done++;const meta=document.querySelector('[data-meta="'+el.dataset.id+'"]');if(meta){meta.textContent=completed?metaText(row):''}});const fill=$('#progressFill');const text=$('#progressText');if(fill)fill.style.width=total?(done/total*100)+'%':'0%';if(text)text.textContent=done+' of '+total;}
-function metaText(row){const person=family.find(f=>f.id===row.completed_by);const who=person?person.emoji+' '+person.name:'Family';const when=row.completed_at?new Date(row.completed_at).toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'just now';return who+' · '+when}function celebrate(){const el=$('#celebration');if(!el)return;el.style.display='block';setTimeout(()=>el.style.display='none',850)}async function toggleCloud(id){const current=!!(store.items[id]&&store.items[id].completed);const next=!current;const member=activeMember();const row={trip_slug:TRIP,item_id:id,completed:next,completed_by:next?member.id:null,completed_at:next?new Date().toISOString():null,updated_at:new Date().toISOString()};store.items[id]=row;paintCloud();if(next)celebrate();try{await upsertRow(row)}catch(err){queue(row);setStatus('Offline. Saved on this device and will retry.')}}async function upsertRow(row){if(!client)throw new Error('No client');const {error}=await client.from('trip_checklist_items').upsert(row,{onConflict:'trip_slug,item_id'});if(error)throw error;setStatus('Family sync live')}function queue(row){store.offline=store.offline.filter(x=>x.item_id!==row.item_id).concat(row);localStorage.setItem('europe2026_offline_queue',JSON.stringify(store.offline))}async function flushQueue(){if(!store.offline.length||!client||!navigator.onLine)return;const q=[...store.offline];store.offline=[];localStorage.setItem('europe2026_offline_queue','[]');for(const row of q){try{await upsertRow(row)}catch(e){queue(row)}}}function setStatus(s){const el=$('#syncStatus');if(el)el.textContent=s}async function initSupabase(){try{client=window.supabase.createClient(supabaseUrl,supabaseAnon);const {data,error}=await client.from('trip_checklist_items').select('*').eq('trip_slug',TRIP);if(error)throw error;(data||[]).forEach(r=>store.items[r.item_id]=r);paintCloud();setStatus('Family sync live');client.channel('trip_europe_2026_checklist').on('postgres_changes',{event:'*',schema:'public',table:'trip_checklist_items',filter:'trip_slug=eq.'+TRIP},payload=>{const row=payload.new||payload.old;if(row&&row.item_id){store.items[row.item_id]=row;paintCloud()}}).subscribe();flushQueue()}catch(e){setStatus('Family sync unavailable. Checks queue locally.')}}document.addEventListener('DOMContentLoaded',()=>{renderMembers();renderDays();renderPacking();document.querySelector('.tab-nav').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;document.querySelectorAll('.tab-btn').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.tab-content').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab))});initSupabase();window.addEventListener('online',flushQueue)});window.EuropeTrip={toggleCloud,paintCloud,store,metaText};
+const { supabaseUrl, supabaseAnon, days, packing, family } = window.TRIP_CONFIG;
+const TRIP = 'europe-2026';
+const store = {
+  items: {},
+  packing: {},
+  member: localStorage.getItem('europe2026_member') || 'calvin',
+  offline: JSON.parse(localStorage.getItem('europe2026_offline_queue') || '[]')
+};
+let client = null;
+
+const $ = selector => document.querySelector(selector);
+
+function esc(value) {
+  return String(value || '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+}
+
+function activeMember() {
+  return family.find(member => member.id === store.member) || family[0];
+}
+
+function renderMembers() {
+  const wrap = $('#memberPicker');
+  wrap.innerHTML = family.map(member =>
+    '<button class="member-btn ' + (store.member === member.id ? 'active' : '') + '" data-member="' + member.id + '">' +
+    member.emoji + ' ' + member.name + '</button>'
+  ).join('');
+  wrap.addEventListener('click', event => {
+    const button = event.target.closest('[data-member]');
+    if (!button) return;
+    store.member = button.dataset.member;
+    localStorage.setItem('europe2026_member', store.member);
+    renderMembers();
+  });
+}
+
+function preBookedBadge(text) {
+  return text
+    ? '<div class="prebooked"><span>✅ PRE-BOOKED</span><small>' + esc(text) + '</small></div>'
+    : '';
+}
+
+function dayCard(day) {
+  return '<article class="day-card day-' + day.cls + '">' +
+    '<div class="day-header"><span class="day-icon">' + day.icon + '</span> ' + esc(day.date) +
+    '<span class="day-subtitle">' + esc(day.title) + '</span></div>' +
+    (day.link ? '<a class="tour-open" href="' + day.link[1] + '">' + day.link[0] + '</a>' : '') +
+    (day.prep ? '<div class="prep-box"><h4>🎒 Pack for Today</h4><ul>' + day.prep.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>' : '') +
+    '<div class="checklist">' + day.items.map((item, index) => {
+      const id = day.n + '-' + (index + 1);
+      return '<div class="checklist-item" data-id="' + id + '"><div class="checkbox"></div><div class="item-content">' +
+        '<div class="item-time">' + esc(item[0]) + '</div>' +
+        '<div class="item-text">' + esc(item[1]) + '</div>' +
+        preBookedBadge(item[3]) +
+        '<div class="item-details">' + esc(item[2]) + '</div>' +
+        '<div class="checked-meta" data-meta="' + id + '"></div></div></div>';
+    }).join('') + '</div>' +
+    (day.booking ? '<div class="booking-info"><h4>📇 Booking Info</h4>' + day.booking.map(item => '<p>' + esc(item) + '</p>').join('') + '</div>' : '') +
+    '</article>';
+}
+
+function renderDays() {
+  const root = $('#dayCards');
+  root.innerHTML = days.map(dayCard).join('');
+  root.addEventListener('click', event => {
+    const item = event.target.closest('.checklist-item');
+    if (item) toggleCloud(item.dataset.id);
+  });
+  paintCloud();
+}
+
+function packKey(person, item) {
+  return 'europe2026_pack_' + person + '_' + item.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
+function renderPacking() {
+  const root = $('#packingCards');
+  root.innerHTML = packing.map(person =>
+    '<article class="packing-person ' + person.className + '" data-person="' + person.id + '">' +
+    '<div class="person-header"><span class="emoji">' + person.emoji + '</span><div class="person-info">' +
+    '<span class="person-name">' + esc(person.name) + '</span><div class="person-bar"><div class="person-fill" data-pack-fill="' + person.id + '"></div></div></div>' +
+    '<div class="person-progress" data-pack-progress="' + person.id + '">0/0 packed</div></div>' +
+    Object.entries(person.categories).map(([category, items]) =>
+      '<div class="packing-category"><div class="category-title">' + esc(category) + '</div>' +
+      items.map(item =>
+        '<div class="packing-item" data-key="' + packKey(person.id, item) + '" data-person="' + person.id + '">' +
+        '<div class="pack-checkbox"></div><div class="pack-text">' + esc(item) + '</div></div>'
+      ).join('') + '</div>'
+    ).join('') + '</article>'
+  ).join('');
+  root.addEventListener('click', event => {
+    const item = event.target.closest('.packing-item');
+    if (!item) return;
+    const key = item.dataset.key;
+    const value = localStorage.getItem(key) !== 'true';
+    localStorage.setItem(key, String(value));
+    paintPacking();
+  });
+  paintPacking();
+}
+
+function paintPacking() {
+  document.querySelectorAll('.packing-item').forEach(element => {
+    element.classList.toggle('completed', localStorage.getItem(element.dataset.key) === 'true');
+  });
+  packing.forEach(person => {
+    const elements = [...document.querySelectorAll('.packing-item[data-person="' + person.id + '"]')];
+    const done = elements.filter(element => element.classList.contains('completed')).length;
+    const total = elements.length;
+    const text = document.querySelector('[data-pack-progress="' + person.id + '"]');
+    const fill = document.querySelector('[data-pack-fill="' + person.id + '"]');
+    if (text) text.textContent = person.name + ' ' + done + '/' + total + ' packed';
+    if (fill) fill.style.width = total ? (done / total * 100) + '%' : '0%';
+  });
+}
+
+function allItineraryIds() {
+  return days.flatMap(day => day.items.map((_, index) => day.n + '-' + (index + 1)));
+}
+
+function paintCloud() {
+  const total = allItineraryIds().length;
+  let done = 0;
+  document.querySelectorAll('.checklist-item,.tour-check-row').forEach(element => {
+    const row = store.items[element.dataset.id];
+    const completed = Boolean(row && row.completed);
+    element.classList.toggle('completed', completed);
+    if (completed && element.classList.contains('checklist-item')) done += 1;
+    const meta = document.querySelector('[data-meta="' + element.dataset.id + '"]');
+    if (meta) meta.textContent = completed ? metaText(row) : '';
+  });
+  const fill = $('#progressFill');
+  const text = $('#progressText');
+  if (fill) fill.style.width = total ? (done / total * 100) + '%' : '0%';
+  if (text) text.textContent = done + ' of ' + total;
+}
+
+function metaText(row) {
+  const person = family.find(member => member.id === row.completed_by);
+  const who = person ? person.emoji + ' ' + person.name : 'Family';
+  const when = row.completed_at ? new Date(row.completed_at).toLocaleString([], {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit'
+  }) : 'just now';
+  return who + ' · ' + when;
+}
+
+function celebrate() {
+  const element = $('#celebration');
+  if (!element) return;
+  element.style.display = 'block';
+  setTimeout(() => { element.style.display = 'none'; }, 850);
+}
+
+async function toggleCloud(id) {
+  const current = Boolean(store.items[id] && store.items[id].completed);
+  const next = !current;
+  const member = activeMember();
+  const row = {
+    trip_slug: TRIP,
+    item_id: id,
+    completed: next,
+    completed_by: next ? member.id : null,
+    completed_at: next ? new Date().toISOString() : null,
+    updated_at: new Date().toISOString()
+  };
+  store.items[id] = row;
+  paintCloud();
+  if (next) celebrate();
+  try {
+    await upsertRow(row);
+  } catch (error) {
+    queue(row);
+    setStatus('Offline. Saved on this device and will retry.');
+  }
+}
+
+async function upsertRow(row) {
+  if (!client) throw new Error('No client');
+  const { error } = await client.from('trip_checklist_items').upsert(row, { onConflict: 'trip_slug,item_id' });
+  if (error) throw error;
+  setStatus('Family sync live');
+}
+
+function queue(row) {
+  store.offline = store.offline.filter(item => item.item_id !== row.item_id).concat(row);
+  localStorage.setItem('europe2026_offline_queue', JSON.stringify(store.offline));
+}
+
+async function flushQueue() {
+  if (!store.offline.length || !client || !navigator.onLine) return;
+  const queueItems = [...store.offline];
+  store.offline = [];
+  localStorage.setItem('europe2026_offline_queue', '[]');
+  for (const row of queueItems) {
+    try {
+      await upsertRow(row);
+    } catch (error) {
+      queue(row);
+    }
+  }
+}
+
+function setStatus(text) {
+  const element = $('#syncStatus');
+  if (element) element.textContent = text;
+}
+
+function renderCountdown() {
+  const element = $('#countdownTimer');
+  if (!element) return;
+  const takeoff = new Date('2026-07-16T12:10:00-07:00');
+  const diff = takeoff - Date.now();
+  if (diff <= 0) {
+    element.textContent = 'Trip is underway';
+    return;
+  }
+  const daysLeft = Math.floor(diff / 86400000);
+  const hoursLeft = Math.floor((diff % 86400000) / 3600000);
+  element.textContent = daysLeft + ' days · ' + hoursLeft + ' hours until takeoff';
+}
+
+async function initSupabase() {
+  try {
+    client = window.supabase.createClient(supabaseUrl, supabaseAnon);
+    const { data, error } = await client.from('trip_checklist_items').select('*').eq('trip_slug', TRIP);
+    if (error) throw error;
+    (data || []).forEach(row => { store.items[row.item_id] = row; });
+    paintCloud();
+    setStatus('Family sync live');
+    client.channel('trip_europe_2026_checklist')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'trip_checklist_items', filter: 'trip_slug=eq.' + TRIP }, payload => {
+        const row = payload.new || payload.old;
+        if (row && row.item_id) {
+          store.items[row.item_id] = row;
+          paintCloud();
+        }
+      })
+      .subscribe();
+    flushQueue();
+  } catch (error) {
+    setStatus('Family sync unavailable. Checks queue locally.');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderCountdown();
+  setInterval(renderCountdown, 60000);
+  renderMembers();
+  renderDays();
+  renderPacking();
+  document.querySelector('.tab-nav').addEventListener('click', event => {
+    const button = event.target.closest('[data-tab]');
+    if (!button) return;
+    document.querySelectorAll('.tab-btn').forEach(element => {
+      element.classList.toggle('active', element === button);
+    });
+    document.querySelectorAll('.tab-content').forEach(element => {
+      element.classList.toggle('active', element.id === button.dataset.tab);
+    });
+  });
+  initSupabase();
+  window.addEventListener('online', flushQueue);
+});
+
+window.EuropeTrip = { toggleCloud, paintCloud, store, metaText };
