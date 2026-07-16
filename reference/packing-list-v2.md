@@ -55,6 +55,8 @@
 - International power adapters (Type C/F, Europe plugs)
 - Headphones (charged)
 - Snacks
+- Travel pillow (each person — for sleeping on planes)
+- Travel blanket (each person — for sleeping on planes)
 - Daypack backpack (for shore excursions, folded flat inside)
 - Extra Ziploc bags (wet swimsuits, snacks, dry stuff)
 - Room key lanyard for cruise (Christian & Victoria)
