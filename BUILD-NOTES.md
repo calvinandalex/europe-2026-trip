@@ -1,6 +1,7 @@
 # Europe 2026 Trip Site - Build Notes
 
 Built by Devin on 2026-07-15.
+Updated 2026-07-15 with expanded cruise port day cards for Corfu, Kotor, Split, and Koper.
 
 ## Live URL
 
@@ -17,6 +18,7 @@ https://github.com/calvinandalex/europe-2026-trip
 - Per-device localStorage packing lists for Calvin, Karissa, Christian, Tori, shared suitcase, and backpack.
 - Athens walking tour page with 22 mapped stops, category icons, route lines, taxi dashes, and family stop content.
 - Venice walking tour page with 12 mapped stops and family stop content.
+- Full checkable cruise-port day cards for Corfu, Kotor, Split, and Koper, with timed stops and short unique-to-this-place notes for quick review.
 - Fourteen .ics calendar files in the calendars folder.
 
 ## Supabase table SQL
@@ -43,6 +45,7 @@ CREATE POLICY "public europe-2026" ON trip_checklist_items
 ## How to update content
 
 - Edit itinerary day data in `index.html` inside `window.TRIP_CONFIG`, then update rendering if needed in `app.js`.
+- Cruise-port outlines are captured in `reference/cruise-port-outlines.md`; mirror accepted changes into the relevant day objects in `index.html`.
 - Edit Athens content in `reference/athens/tour-content.md` first, then mirror the stop data in `athens.html`.
 - Edit Venice content in `reference/venice/tour-content.md` first, then mirror the stop data in `venice.html`.
 - Packing list changes live in `index.html` data and remain per-device because checks use localStorage.
