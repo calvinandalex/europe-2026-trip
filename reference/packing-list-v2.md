@@ -45,6 +45,11 @@
 - Bandaids + Compeed blister pads
 - Antibiotic ointment
 
+## 👧 Victoria
+
+### Comfort items
+- 🥭 Mango (stuffed animal) — MUST BRING / high priority
+
 ## 👕 Wear (on travel day)
 - Slides, socks, travel clothes
 

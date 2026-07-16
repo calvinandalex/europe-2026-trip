@@ -98,7 +98,16 @@ function renderDays() {
 }
 
 function packKey(person, item) {
-  return 'europe2026_pack_' + person + '_' + item.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+  const label = packingItemLabel(item);
+  return 'europe2026_pack_' + person + '_' + label.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+}
+
+function packingItemLabel(item) {
+  return typeof item === 'string' ? item : item.text;
+}
+
+function packingItemPriority(item) {
+  return typeof item === 'string' ? '' : String(item.priority || '').replace(/[^a-z]/g, '');
 }
 
 function renderPacking() {
@@ -110,10 +119,13 @@ function renderPacking() {
     '<div class="person-progress" data-pack-progress="' + person.id + '">0/0 packed</div></div>' +
     Object.entries(person.categories).map(([category, items]) =>
       '<div class="packing-category"><div class="category-title">' + esc(category) + '</div>' +
-      items.map(item =>
-        '<div class="packing-item" data-key="' + packKey(person.id, item) + '" data-person="' + person.id + '">' +
-        '<div class="pack-checkbox"></div><div class="pack-text">' + esc(item) + '</div></div>'
-      ).join('') + '</div>'
+      items.map(item => {
+        const priority = packingItemPriority(item);
+        return '<div class="packing-item ' + (priority ? 'pack-priority pack-priority-' + priority : '') + '" data-key="' + packKey(person.id, item) + '" data-person="' + person.id + '">' +
+          '<div class="pack-checkbox"></div><div class="pack-text">' + esc(packingItemLabel(item)) +
+          (priority === 'high' ? '<span class="priority-badge">Must bring</span>' : '') +
+          '</div></div>';
+      }).join('') + '</div>'
     ).join('') + '</article>'
   ).join('');
   if (root.dataset.bound !== 'true') {
