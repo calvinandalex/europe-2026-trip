@@ -20,6 +20,31 @@ function esc(value) {
   }[char]));
 }
 
+function mapsAddressLink(address) {
+  const query = encodeURIComponent(address);
+  return '<a class="map-address" href="https://www.google.com/maps/search/?api=1&query=' + query + '" target="_blank" rel="noopener noreferrer">📍 Address: ' + esc(address) + '</a>';
+}
+
+function linkAddresses(value) {
+  const text = String(value || '');
+  const label = 'Address:';
+  const lower = text.toLowerCase();
+  const start = lower.indexOf(label.toLowerCase());
+  if (start === -1) return esc(text);
+
+  const addressStart = start + label.length;
+  const dotDivider = text.indexOf(' · ', addressStart);
+  const rawEnd = dotDivider === -1 ? text.length : dotDivider;
+  const rawAddress = text.slice(addressStart, rawEnd);
+  const trailingPeriod = dotDivider === -1 && rawAddress.trimEnd().endsWith('.');
+  const address = trailingPeriod ? rawAddress.trim().slice(0, -1) : rawAddress.trim();
+  const afterStart = trailingPeriod ? rawEnd - 1 : rawEnd;
+
+  return esc(text.slice(0, start)) +
+    mapsAddressLink(address) +
+    esc(text.slice(afterStart));
+}
+
 function activeMember() {
   return family.find(member => member.id === store.member) || family[0];
 }
@@ -72,10 +97,10 @@ function dayCard(day) {
         '<div class="item-time">' + esc(item[0]) + '</div>' +
         '<div class="item-text">' + esc(item[1]) + '</div>' +
         preBookedBadge(item[3]) +
-        '<div class="item-details">' + esc(item[2]) + '</div>' +
+        '<div class="item-details">' + linkAddresses(item[2]) + '</div>' +
         '<div class="checked-meta" data-meta="' + id + '"></div></div></div>';
     }).join('') + '</div>' +
-    (day.booking ? '<div class="booking-info"><h4>📇 Booking Info</h4>' + day.booking.map(item => '<p>' + esc(item) + '</p>').join('') + '</div>' : '') +
+    (day.booking ? '<div class="booking-info"><h4>📇 Booking Info</h4>' + day.booking.map(item => '<p>' + linkAddresses(item) + '</p>').join('') + '</div>' : '') +
     '</article>';
 }
 
@@ -83,6 +108,7 @@ function renderDays() {
   const root = $('#dayCards');
   root.innerHTML = days.map(dayCard).join('');
   root.addEventListener('click', event => {
+    if (event.target.closest('a')) return;
     if (event.target.closest('[data-birthday-confetti]')) {
       showBirthdayConfetti();
       return;

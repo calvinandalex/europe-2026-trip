@@ -18,6 +18,31 @@ function esc(value) {
   }[char]));
 }
 
+function mapsAddressLink(address) {
+  const query = encodeURIComponent(address);
+  return '<a class="map-address" href="https://www.google.com/maps/search/?api=1&query=' + query + '" target="_blank" rel="noopener noreferrer">📍 Address: ' + esc(address) + '</a>';
+}
+
+function linkAddresses(value) {
+  const text = String(value || '');
+  const label = 'Address:';
+  const lower = text.toLowerCase();
+  const start = lower.indexOf(label.toLowerCase());
+  if (start === -1) return esc(text);
+
+  const addressStart = start + label.length;
+  const dotDivider = text.indexOf(' · ', addressStart);
+  const rawEnd = dotDivider === -1 ? text.length : dotDivider;
+  const rawAddress = text.slice(addressStart, rawEnd);
+  const trailingPeriod = dotDivider === -1 && rawAddress.trimEnd().endsWith('.');
+  const address = trailingPeriod ? rawAddress.trim().slice(0, -1) : rawAddress.trim();
+  const afterStart = trailingPeriod ? rawEnd - 1 : rawEnd;
+
+  return esc(text.slice(0, start)) +
+    mapsAddressLink(address) +
+    esc(text.slice(afterStart));
+}
+
 function idFor(index) {
   return kind + '-tour-' + (index + 1);
 }
@@ -97,7 +122,7 @@ function renderStops() {
       '<div class="stop-meta">⏱️ ' + esc(time) + ' · ' + esc(transport) + ' · ' + esc(ticket) + '</div>' +
       preBookedBadge(booked) + '</div></div>' +
       '<div class="stop-lines">' +
-      '<p><span class="label">📸 What it is</span> ' + esc(what) + '</p>' +
+      '<p><span class="label">📸 What it is</span> ' + linkAddresses(what) + '</p>' +
       '<p><span class="label">🎯 Look for this</span> ' + esc(look) + '</p>' +
       '<p><span class="label">👦 Christian</span> ' + esc(christian) + '</p>' +
       '<p><span class="label">👧 Tori</span> ' + esc(tori) + '</p></div>' +
