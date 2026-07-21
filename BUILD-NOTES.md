@@ -4,6 +4,7 @@ Built by Devin on 2026-07-15.
 Updated 2026-07-15 with expanded cruise port day cards for Corfu, Kotor, Split, and Koper.
 Updated 2026-07-20 with a kid-friendly Split Day 9 rework: Riva walk-in, quick palace loop, Fish Market + Green Market, Froggyland, first Marjan viewpoint only, and 2+ hours at Kasjuni Beach.
 Updated 2026-07-20 with tappable Google Maps address links for itinerary stops and Athens/Venice tour stops.
+Updated 2026-07-21 with checkable Viator sub-stops for Katakolon/Olympia Day 6 and Kotor Blue Cave Day 8.
 
 ## Live URL
 
@@ -21,6 +22,7 @@ https://github.com/calvinandalex/europe-2026-trip
 - Athens walking tour page with 22 mapped stops, category icons, route lines, taxi dashes, and family stop content.
 - Venice walking tour page with 12 mapped stops and family stop content.
 - Full checkable cruise-port day cards for Corfu, Kotor, Split, and Koper, with timed stops and short unique-to-this-place notes for quick review.
+- Katakolon/Olympia and Kotor Blue Cave Viator tours are expanded into individual checkable sub-stops.
 - Inline `Address: ...` strings render as tappable Google Maps search links in the main itinerary and tour pages.
 - Fourteen .ics calendar files in the calendars folder.
 
