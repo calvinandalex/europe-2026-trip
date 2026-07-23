@@ -84,10 +84,46 @@ function birthdayBanner(day) {
     '</div>';
 }
 
+function itineraryStorageKey(dayNumber) {
+  return 'europe2026_day_open_' + dayNumber;
+}
+
+function pacificDateParts(date) {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Los_Angeles',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(date).reduce((value, part) => {
+    value[part.type] = part.value;
+    return value;
+  }, {});
+}
+
+function pdtDateIndex(date) {
+  const parts = pacificDateParts(date);
+  return Date.UTC(Number(parts.year), Number(parts.month) - 1, Number(parts.day));
+}
+
+function todayTripDayNumber() {
+  const tripStart = Date.UTC(2026, 6, 16);
+  return Math.floor((pdtDateIndex(new Date()) - tripStart) / 86400000) + 1;
+}
+
+function defaultDayOpen(day) {
+  const saved = localStorage.getItem(itineraryStorageKey(day.n));
+  if (saved !== null) return saved === 'true';
+  return day.n === todayTripDayNumber();
+}
+
 function dayCard(day) {
-  return '<article class="day-card day-' + day.cls + '">' +
-    '<div class="day-header"><span class="day-icon">' + day.icon + '</span> ' + esc(day.date) +
-    '<span class="day-subtitle">' + esc(day.title) + '</span></div>' +
+  const isOpen = defaultDayOpen(day);
+  return '<article class="day-card day-' + day.cls + (isOpen ? ' day-open' : '') + '" data-day="' + day.n + '">' +
+    '<button class="day-header" type="button" data-day-toggle="' + day.n + '" aria-expanded="' + String(isOpen) + '" aria-controls="day-panel-' + day.n + '">' +
+    '<span class="day-heading"><span class="day-icon">' + day.icon + '</span> Day ' + day.n + ' · ' + esc(day.date) +
+    '<span class="day-subtitle">' + esc(day.title) + '</span></span><span class="day-chevron" aria-hidden="true">' + (isOpen ? '▼' : '▶') + '</span></button>' +
+    '<div class="day-panel" id="day-panel-' + day.n + '">' +
+    '<div class="day-panel-inner">' +
     birthdayBanner(day) +
     (day.link ? '<a class="tour-open" href="' + day.link[1] + '">' + day.link[0] + '</a>' : '') +
     (day.prep ? '<div class="prep-box"><h4>🎒 Pack for Today</h4><ul>' + day.prep.map(item => '<li>' + esc(item) + '</li>').join('') + '</ul></div>' : '') +
@@ -101,20 +137,60 @@ function dayCard(day) {
         '<div class="checked-meta" data-meta="' + id + '"></div></div></div>';
     }).join('') + '</div>' +
     (day.booking ? '<div class="booking-info"><h4>📇 Booking Info</h4>' + day.booking.map(item => '<p>' + linkAddresses(item) + '</p>').join('') + '</div>' : '') +
+    '</div></div>' +
     '</article>';
+}
+
+function setDayOpen(card, open, persist = true) {
+  const dayNumber = card.dataset.day;
+  const panel = card.querySelector('.day-panel');
+  const toggle = card.querySelector('[data-day-toggle]');
+  const chevron = card.querySelector('.day-chevron');
+  card.classList.toggle('day-open', open);
+  if (toggle) toggle.setAttribute('aria-expanded', String(open));
+  if (chevron) chevron.textContent = open ? '▼' : '▶';
+  if (panel) panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+  if (persist) localStorage.setItem(itineraryStorageKey(dayNumber), String(open));
+}
+
+function refreshDayPanelHeights() {
+  document.querySelectorAll('.day-card.day-open .day-panel').forEach(panel => {
+    panel.style.maxHeight = panel.scrollHeight + 'px';
+  });
+}
+
+function expandAllDays(open) {
+  document.querySelectorAll('.day-card').forEach(card => setDayOpen(card, open));
 }
 
 function renderDays() {
   const root = $('#dayCards');
   root.innerHTML = days.map(dayCard).join('');
-  root.addEventListener('click', event => {
-    if (event.target.closest('a')) return;
-    if (event.target.closest('[data-birthday-confetti]')) {
-      showBirthdayConfetti();
-      return;
-    }
-    const item = event.target.closest('.checklist-item');
-    if (item) toggleCloud(item.dataset.id);
+  refreshDayPanelHeights();
+  if (root.dataset.bound !== 'true') {
+    root.dataset.bound = 'true';
+    root.addEventListener('click', event => {
+      const toggle = event.target.closest('[data-day-toggle]');
+      if (toggle) {
+        const card = toggle.closest('.day-card');
+        setDayOpen(card, !card.classList.contains('day-open'));
+        return;
+      }
+      if (event.target.closest('a')) return;
+      if (event.target.closest('[data-birthday-confetti]')) {
+        showBirthdayConfetti();
+        return;
+      }
+      const item = event.target.closest('.checklist-item');
+      if (item) toggleCloud(item.dataset.id);
+    });
+  }
+  document.querySelectorAll('[data-itinerary-action]').forEach(button => {
+    if (button.dataset.bound === 'true') return;
+    button.dataset.bound = 'true';
+    button.addEventListener('click', () => {
+      expandAllDays(button.dataset.itineraryAction === 'expand');
+    });
   });
   paintCloud();
   renderBirthdayCountdowns();
@@ -213,6 +289,7 @@ function paintCloud() {
   const text = $('#progressText');
   if (fill) fill.style.width = total ? (done / total * 100) + '%' : '0%';
   if (text) text.textContent = done + ' of ' + total;
+  refreshDayPanelHeights();
 }
 
 function setCheckedMeta(meta, row) {
@@ -394,6 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   initSupabase();
   window.addEventListener('online', flushQueue);
+  window.addEventListener('resize', refreshDayPanelHeights);
 });
 
-window.EuropeTrip = { toggleCloud, paintCloud, store, metaText };
+window.EuropeTrip = { toggleCloud, paintCloud, store, metaText, todayTripDayNumber, expandAllDays };
